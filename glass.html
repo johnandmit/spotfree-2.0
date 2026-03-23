@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Glassmorphism Showcase</title>
+    <style>
+        /* Sourcing a clean, modern font */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+        :root {
+            --card-width: 380px;
+            --card-height: 520px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            /* The background is crucial for the glass effect to be visible */
+            background: #1c1c1c;
+            color: #fff;
+            overflow: hidden;
+            /* Hide the overflow from the animated shapes */
+            position: relative;
+            /* Positioning context for the shapes */
+        }
+
+        /* Animated background shapes for a dynamic feel */
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(150px);
+            opacity: 0.8;
+        }
+
+        .shape-1 {
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(45deg, #ff0077, #ff6600);
+            top: -10%;
+            left: -10%;
+            animation: move 20s infinite alternate;
+        }
+
+        .shape-2 {
+            width: 450px;
+            height: 450px;
+            background: linear-gradient(45deg, #00eeff, #4e11ff);
+            bottom: -5%;
+            right: -15%;
+            animation: move 25s infinite alternate-reverse;
+        }
+
+        @keyframes move {
+            from {
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            to {
+                transform: translate(100px, 200px) rotate(360deg);
+            }
+        }
+
+        /* The main container for the glass card */
+        .card-container {
+            position: relative;
+            width: var(--card-width);
+            height: var(--card-height);
+            /* This will create the 3D tilt effect on hover */
+            perspective: 1000px;
+        }
+
+        /* The Glass Card */
+        .glass-card {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 24px;
+            overflow: hidden;
+            /* Important for the glare effect */
+
+            /* --- Core Glassmorphism Properties --- */
+            background: rgba(255, 255, 255, 0.05);
+            /* Minimal base color */
+            backdrop-filter: blur(12px) saturate(120%);
+            -webkit-backdrop-filter: blur(12px) saturate(120%);
+            /* For Safari */
+
+            /* --- Advanced Border & Shadow System --- */
+            /* This creates the illusion of varied border thickness and lighting */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow:
+                /* Outer soft shadow for depth */
+                0 8px 32px rgba(2, 1, 19, 0.3),
+                /* Inner highlight (Top-Left) - creates a thick, bright edge */
+                inset 1px 1px 0px 0px rgba(255, 255, 255, 0.25),
+                /* Inner shadow (Bottom-Right) - creates a thick, dark edge */
+                inset -2px -2px 2px 0px rgba(0, 0, 0, 0.15);
+
+
+            /* Smooth transition for the tilt effect */
+            transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+
+            /* Preparing for the mouse-move JS */
+            transform-style: preserve-3d;
+        }
+
+        /* --- Interactive 3D Tilt Effect on Hover --- */
+        .card-container:hover .glass-card {
+            transform: rotateY(var(--rotate-y, 0)) rotateX(var(--rotate-x, 0));
+        }
+
+        /* --- Interactive Mouse-Reactive Glare --- */
+        /* This pseudo-element creates a light that follows the cursor */
+        .glass-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at var(--mouse-x, 0) var(--mouse-y, 0),
+                    rgba(255, 255, 255, 0.3) 0%,
+                    rgba(255, 255, 255, 0) 40%);
+            border-radius: inherit;
+            opacity: 0;
+            transition: opacity 0.5s;
+            z-index: 2;
+            /* Sits above the content but below the top layer */
+            pointer-events: none;
+            /* Allows clicks to go through */
+        }
+
+        .card-container:hover .glass-card::before {
+            opacity: 1;
+        }
+
+        /* Content inside the card */
+        .card-content {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+            z-index: 1;
+            /* Applying a 3d transform to the content itself makes it pop out */
+            transform: translateZ(50px);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 24px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-body {
+            font-size: 0.95rem;
+            font-weight: 300;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: auto;
+            /* Pushes button to the bottom */
+        }
+
+        .card-button {
+            margin-top: 30px;
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-align: center;
+            font-weight: 500;
+            color: #fff;
+            text-decoration: none;
+
+            /* Giving the button its own glass effect */
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+            transition: all 0.3s ease;
+        }
+
+        .card-button:hover {
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- The background shapes -->
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+
+    <div class="card-container">
+        <div class="glass-card">
+            <div class="card-content">
+                <div class="card-header">
+                    <div class="card-icon">💎</div>
+                    <h2 class="card-title">Glass UI</h2>
+                </div>
+                <p class="card-body">
+                    This card demonstrates advanced glassmorphism. Notice the multi-layered shadows and borders that
+                    create a 3D bevel effect. The interactive glare follows your cursor, and the entire card tilts in 3D
+                    space.
+                </p>
+                <a href="#" class="card-button">Discover More</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const cardContainer = document.querySelector('.card-container');
+        const card = document.querySelector('.glass-card');
+
+        // --- Mouse-reactive Glare Effect ---
+        card.addEventListener('mousemove', e => {
+            const rect = card.getBoundingClientRect();
+            // Calculate mouse position relative to the card's top-left corner
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            // Set CSS custom properties for the radial gradient
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
+        });
+
+        // --- 3D Tilt Effect on Hover ---
+        cardContainer.addEventListener('mousemove', e => {
+            const rect = cardContainer.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            // Calculate rotation values based on mouse position
+            // The further from the center, the more it rotates
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            const rotateX = (y - centerY) / centerY * -10; // Max rotation 10deg
+            const rotateY = (x - centerX) / centerX * 10;  // Max rotation 10deg
+
+            card.style.setProperty('--rotate-x', `${rotateX}deg`);
+            card.style.setProperty('--rotate-y', `${rotateY}deg`);
+        });
+
+        // Reset transform when the mouse leaves the container
+        cardContainer.addEventListener('mouseleave', () => {
+            card.style.setProperty('--rotate-x', '0deg');
+            card.style.setProperty('--rotate-y', '0deg');
+        });
+
+    </script>
+</body>
+
+</html>

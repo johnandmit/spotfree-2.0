@@ -1,0 +1,2119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Spotfree Window Cleaning and House Wash. Auckland's top-rated exterior cleaning service. 5.0 stars, 211+ Google reviews. Window cleaning, house washing, pressure washing.">
+    <title>Home | Spotfree Window Cleaning &amp; House Wash, Auckland</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        /* ═══════════════ DESIGN TOKENS ═══════════════ */
+        :root {
+            --color-bg: #f8fafb;
+            --color-dark: #0f1b2d;
+            --color-accent: #1a8fe3;
+            --color-accent-dark: #1277c4;
+            --color-accent-light: #e8f4fd;
+            --color-text: #4a5568;
+            --color-heading: #0f1b2d;
+            --color-white: #ffffff;
+            --color-gold: #f59e0b;
+            --color-gold-light: #fef3c7;
+            --color-border: #e2e8f0;
+            --color-card: #ffffff;
+            --color-section-alt: #f1f5f9;
+            --font-heading: 'Outfit', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.12);
+            --radius: 12px;
+        }
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--color-bg);
+            color: var(--color-text);
+            font-family: var(--font-body);
+            line-height: 1.7;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        /* ═══════════════ SCROLL ANIMATIONS ═══════════════ */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .fade-in-left {
+            opacity: 0;
+            transform: translateX(-40px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .fade-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .fade-in-right {
+            opacity: 0;
+            transform: translateX(40px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .fade-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .scale-in {
+            opacity: 0;
+            transform: scale(0.92);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .scale-in.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* ═══════════════ HEADER ═══════════════ */
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            color: var(--color-accent);
+            font-size: 1.3rem;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .logo span {
+            color: var(--color-heading);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 0.92rem;
+            font-weight: 500;
+            color: var(--color-text);
+            padding-bottom: 4px;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--color-accent);
+            border-bottom-color: var(--color-accent);
+        }
+
+        .header-cta {
+            background: var(--color-accent);
+            color: var(--color-white);
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 0.88rem;
+            padding: 10px 22px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .header-cta:hover {
+            background: var(--color-accent-dark);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--color-accent);
+            font-size: 1.8rem;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        /* ═══════════════ MOBILE NAV ═══════════════ */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 72px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--color-white);
+            z-index: 999;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.4s ease;
+        }
+
+        .mobile-nav.open {
+            max-height: calc(100vh - 72px);
+        }
+
+        .mobile-nav a {
+            display: block;
+            width: 100%;
+            text-align: center;
+            padding: 18px 16px;
+            font-size: 1.1rem;
+            color: var(--color-text);
+            border-bottom: 1px solid var(--color-border);
+            transition: all 0.3s ease;
+        }
+
+        .mobile-nav a:hover,
+        .mobile-nav a.active {
+            color: var(--color-accent);
+            background: var(--color-accent-light);
+        }
+
+        .mobile-nav .mobile-cta {
+            display: block;
+            width: calc(100% - 32px);
+            margin: 20px 16px;
+            background: var(--color-accent);
+            color: var(--color-white);
+            text-align: center;
+            padding: 14px;
+            font-weight: 700;
+            border-radius: 8px;
+        }
+
+        @media (max-width: 768px) {
+
+            .nav-links,
+            .header-cta {
+                display: none !important;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .mobile-nav {
+                display: flex;
+            }
+
+            .site-header {
+                padding: 0 20px;
+            }
+        }
+
+        /* ═══════════════ HERO ═══════════════ */
+        .hero {
+            position: relative;
+            min-height: 92vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: var(--color-dark);
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background-image: url('images/real_exterior_01.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(15, 27, 45, 0.88) 0%, rgba(26, 143, 227, 0.55) 100%);
+        }
+
+        /* hero-content styles moved to glassmorphism section */
+
+        @keyframes heroFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            padding: 8px 20px;
+            font-size: 0.85rem;
+            color: var(--color-white);
+            margin-bottom: 24px;
+            font-weight: 500;
+        }
+
+        .hero-badge .stars {
+            color: var(--color-gold);
+        }
+
+        .hero h1 {
+            font-family: var(--font-heading);
+            color: var(--color-white);
+            font-size: clamp(2.2rem, 5vw, 3.6rem);
+            margin-bottom: 18px;
+            line-height: 1.15;
+            font-weight: 800;
+        }
+
+        .hero h1 .accent {
+            color: var(--color-gold);
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 32px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: var(--color-accent);
+            color: var(--color-white);
+            font-family: var(--font-body);
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 15px 36px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.3px;
+        }
+
+        .btn-primary:hover {
+            background: var(--color-accent-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(26, 143, 227, 0.35);
+        }
+
+        .btn-outline {
+            display: inline-block;
+            background: transparent;
+            color: var(--color-white);
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 15px 36px;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-left: 12px;
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--color-white);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator svg {
+            width: 28px;
+            height: 28px;
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.6);
+            stroke-width: 2;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
+
+            50% {
+                transform: translateX(-50%) translateY(10px);
+            }
+        }
+
+        /* ═══════════════ TRUST STRIP ═══════════════ */
+        .trust-strip {
+            background: var(--color-white);
+            border-bottom: 1px solid var(--color-border);
+            padding: 24px 40px;
+        }
+
+        .trust-strip-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--color-heading);
+        }
+
+        .trust-item svg {
+            width: 22px;
+            height: 22px;
+            flex-shrink: 0;
+        }
+
+        .trust-item .gold {
+            color: var(--color-gold);
+        }
+
+        .trust-item .blue {
+            color: var(--color-accent);
+        }
+
+        .trust-item .green {
+            color: #10b981;
+        }
+
+        /* ═══════════════ SECTIONS ═══════════════ */
+        .section {
+            padding: 80px 40px;
+        }
+
+        .section-alt {
+            background: var(--color-section-alt);
+        }
+
+        .section-title {
+            font-family: var(--font-heading);
+            color: var(--color-heading);
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
+            text-align: center;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--color-text);
+            font-size: 1.05rem;
+            margin-bottom: 48px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .accent-line {
+            width: 50px;
+            height: 4px;
+            background: var(--color-accent);
+            margin: 14px auto 20px;
+            border-radius: 2px;
+        }
+
+        /* ═══════════════ REVIEW CAROUSEL ═══════════════ */
+        .reviews-section {
+            background: var(--color-dark);
+            padding: 80px 40px;
+            overflow: hidden;
+        }
+
+        .reviews-section .section-title {
+            color: var(--color-white);
+        }
+
+        .reviews-section .section-subtitle {
+            color: rgba(255, 255, 255, 0.65);
+        }
+
+        .reviews-section .accent-line {
+            background: var(--color-gold);
+        }
+
+        .review-carousel-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .review-carousel {
+            display: flex;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform;
+        }
+
+        .review-slide {
+            min-width: 100%;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .review-stars {
+            color: var(--color-gold);
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            letter-spacing: 4px;
+        }
+
+        .review-text {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            margin-bottom: 24px;
+            color: rgba(255, 255, 255, 0.9);
+            font-style: italic;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .review-author {
+            font-weight: 700;
+            color: var(--color-gold);
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .review-date {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: 6px;
+        }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 20px;
+            padding: 10px 0 20px;
+            flex-wrap: wrap;
+        }
+
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(245, 158, 11, 0.2);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-dot.active {
+            background: var(--color-gold);
+            transform: scale(1.3);
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+        }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: var(--color-white);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel-nav:hover {
+            background: var(--color-accent);
+            border-color: var(--color-accent);
+        }
+
+        .carousel-prev {
+            left: -10px;
+            z-index: 10;
+        }
+
+        .carousel-next {
+            right: -10px;
+            z-index: 10;
+        }
+
+        @media (max-width: 768px) {
+            .carousel-prev {
+                left: 0;
+            }
+
+            .carousel-next {
+                right: 0;
+            }
+        }
+
+        /* ═══════════════ SOCIAL PROOF ═══════════════ */
+        .social-proof-section {
+            background: var(--color-white);
+            padding: 80px 40px;
+            border-top: 1px solid var(--color-border);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .social-proof-grid {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1.4fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .rating-left {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .rating-number {
+            font-family: var(--font-heading);
+            font-size: 96px;
+            color: var(--color-accent);
+            line-height: 1;
+            margin-bottom: 8px;
+            font-weight: 800;
+        }
+
+        .star-row {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 12px;
+        }
+
+        .star-svg {
+            width: 30px;
+            height: 30px;
+            transform: scale(0);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .star-svg.visible {
+            transform: scale(1);
+        }
+
+        .rating-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--color-text);
+            font-weight: 500;
+        }
+
+        .google-g {
+            width: 18px;
+            height: 18px;
+        }
+
+        .bars-right {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .bar-row {
+            display: grid;
+            grid-template-columns: 40px 1fr 45px;
+            align-items: center;
+            gap: 14px;
+            opacity: 0;
+            transform: translateX(20px);
+            transition: all 0.6s ease;
+        }
+
+        .bar-row.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .bar-label {
+            font-size: 13px;
+            color: var(--color-text);
+            font-weight: 600;
+        }
+
+        .bar-track {
+            height: 10px;
+            background: var(--color-section-alt);
+            border-radius: 5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 0%;
+            border-radius: 5px;
+            transition: width 1s cubic-bezier(0.65, 0, 0.35, 1);
+        }
+
+        .bar-percent {
+            font-size: 13px;
+            color: var(--color-text);
+            text-align: right;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .social-proof-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .rating-number {
+                font-size: 72px;
+            }
+        }
+
+        /* ═══════════════ SERVICES GRID ═══════════════ */
+        .services-grid {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .service-card {
+            background: var(--color-card);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius);
+            padding: 36px 28px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--color-accent);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--color-accent);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-icon {
+            font-size: 2.8rem;
+            margin-bottom: 16px;
+            line-height: 1;
+        }
+
+        .service-card h3 {
+            font-family: var(--font-heading);
+            color: var(--color-heading);
+            font-size: 1.15rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .service-card p {
+            font-size: 0.9rem;
+            color: var(--color-text);
+            line-height: 1.7;
+        }
+
+        @media (max-width: 768px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ═══════════════ WHY CHOOSE US ═══════════════ */
+        .why-grid {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .why-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 18px;
+            background: var(--color-white);
+            padding: 28px;
+            border-radius: var(--radius);
+            border: 1px solid var(--color-border);
+            transition: all 0.3s ease;
+        }
+
+        .why-card:hover {
+            box-shadow: var(--shadow-md);
+        }
+
+        .why-icon {
+            font-size: 2rem;
+            flex-shrink: 0;
+            width: 48px;
+            height: 48px;
+            background: var(--color-accent-light);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .why-card h3 {
+            font-family: var(--font-heading);
+            color: var(--color-heading);
+            font-size: 1.05rem;
+            margin-bottom: 6px;
+            font-weight: 700;
+        }
+
+        .why-card p {
+            font-size: 0.88rem;
+            color: var(--color-text);
+        }
+
+        @media (max-width: 768px) {
+            .why-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ═══════════════ REVIEW CARD STARS (shared) ═══════════════ */
+        .review-card-stars {
+            color: var(--color-gold);
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+            letter-spacing: 2px;
+        }
+
+        /* ═══════════════ FLOATING AI CHAT WIDGET ═══════════════ */
+        .floating-chat-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 65px;
+            height: 65px;
+            background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-dark) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-white);
+            font-size: 32px;
+            box-shadow: var(--shadow-lg);
+            cursor: pointer;
+            z-index: 9999;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 3px solid var(--color-white);
+        }
+
+        .floating-chat-btn:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 15px 35px rgba(26, 143, 227, 0.4);
+        }
+
+        .chat-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 27, 45, 0.9);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            transition: opacity 0.4s ease;
+        }
+
+        .chat-modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .chat-modal-content {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform: scale(0.95) translateY(20px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: transparent;
+        }
+
+        .chat-modal-overlay.active .chat-modal-content {
+            transform: scale(1) translateY(0);
+        }
+
+        .chat-modal-close {
+            position: absolute;
+            top: 25px;
+            right: 35px;
+            width: 55px;
+            height: 55px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            color: white;
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10001;
+            transition: all 0.2s ease;
+        }
+
+        .chat-modal-close:hover {
+            background: var(--color-accent);
+            transform: rotate(90deg);
+        }
+
+        .chat-modal-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 0;
+        }
+        /* ═══════════════ REVIEW WALL ═══════════════ */
+        .review-wall {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .review-card {
+            background: var(--color-white);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius);
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .review-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .review-card-stars {
+            color: var(--color-gold);
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+            letter-spacing: 2px;
+        }
+
+        .review-card-text {
+            font-size: 0.88rem;
+            color: var(--color-text);
+            line-height: 1.7;
+            margin-bottom: 14px;
+            font-style: italic;
+        }
+
+        .review-card-author {
+            font-weight: 700;
+            color: var(--color-heading);
+            font-size: 0.85rem;
+        }
+
+        .review-card-date {
+            font-size: 0.75rem;
+            color: var(--color-text);
+            opacity: 0.5;
+            margin-top: 3px;
+        }
+
+        @media (max-width: 768px) {
+            .review-wall {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .review-wall {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* ═══════════════ CTA BANNER ═══════════════ */
+        .cta-banner {
+            background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-dark) 100%);
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .cta-banner h2 {
+            font-family: var(--font-heading);
+            color: var(--color-white);
+            font-size: clamp(1.6rem, 3vw, 2.2rem);
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .cta-banner p {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 1.05rem;
+            margin-bottom: 28px;
+        }
+
+        .btn-white {
+            display: inline-block;
+            background: var(--color-white);
+            color: var(--color-accent);
+            font-family: var(--font-body);
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 15px 36px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-white:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+
+
+        /* ═══════════════ FOOTER ═══════════════ */
+        .site-footer {
+            background: var(--color-dark);
+            padding: 60px 40px 0;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-bottom: 40px;
+        }
+
+        .footer-brand .footer-logo {
+            font-family: var(--font-heading);
+            color: var(--color-accent);
+            font-size: 1.2rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .footer-brand .footer-tagline {
+            font-size: 0.88rem;
+            color: rgba(255, 255, 255, 0.5);
+            line-height: 1.6;
+        }
+
+        .footer-heading {
+            font-family: var(--font-heading);
+            color: var(--color-white);
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-nav ul {
+            list-style: none;
+        }
+
+        .footer-nav ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-nav a {
+            font-size: 0.88rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-nav a:hover {
+            color: var(--color-accent);
+        }
+
+        .footer-contact p {
+            font-size: 0.88rem;
+            margin-bottom: 6px;
+        }
+
+        .footer-rating {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 12px;
+            font-size: 0.85rem;
+        }
+
+        .footer-rating .stars {
+            color: var(--color-gold);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 20px 0;
+            text-align: center;
+            font-size: 0.82rem;
+            color: rgba(255, 255, 255, 0.35);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .footer-rating {
+                justify-content: center;
+            }
+
+            .section {
+                padding: 60px 20px;
+            }
+
+            .trust-strip {
+                padding: 20px;
+            }
+
+            .trust-strip-inner {
+                gap: 20px;
+            }
+        }
+
+        /* ═══════════════ GLASSMORPHISM HERO ═══════════════ */
+        .hero-inner {
+            position: relative;
+            z-index: 2;
+            perspective: 1000px; /* For 3D glass tilt */
+            display: flex;
+            justify-content: center;
+        }
+
+        /* ═══════════════ HERO SPARKLES & GLASS GLARE ═══════════════ */
+        .hero-sparkles {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        .sparkle {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: white;
+            clip-path: polygon(50% 0%, 55% 45%, 100% 50%, 55% 55%, 50% 100%, 45% 55%, 0% 50%, 45% 45%);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(26, 143, 227, 0.6);
+            animation: twinkle var(--duration) var(--delay) ease-in-out infinite;
+        }
+        .sparkle:nth-child(1) { width: 30px; height: 30px; left: 15%; top: 25%; --duration: 4s; --delay: 0s; }
+        .sparkle:nth-child(2) { width: 15px; height: 15px; left: 80%; top: 15%; --duration: 5s; --delay: 1s; }
+        .sparkle:nth-child(3) { width: 25px; height: 25px; left: 65%; top: 50%; --duration: 3.5s; --delay: 2s; }
+        .sparkle:nth-child(4) { width: 40px; height: 40px; left: 25%; top: 65%; --duration: 6s; --delay: 0.5s; }
+        .sparkle:nth-child(5) { width: 20px; height: 20px; left: 85%; top: 75%; --duration: 4.5s; --delay: 1.5s; }
+
+        @keyframes twinkle {
+            0%, 100% { transform: scale(0.5) rotate(0deg); opacity: 0.2; }
+            50% { transform: scale(1.2) rotate(45deg); opacity: 1; filter: drop-shadow(0 0 8px white); }
+        }
+
+        /* Interactive glass glare & 3D Tilt */
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 48px 40px;
+            animation: heroFadeIn 1s ease forwards;
+            
+            /* Advanced Glassmorphism */
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px) saturate(120%);
+            -webkit-backdrop-filter: blur(16px) saturate(120%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.3),
+                inset 1px 1px 0px 0px rgba(255, 255, 255, 0.25),
+                inset -2px -2px 2px 0px rgba(0, 0, 0, 0.1);
+            
+            overflow: hidden; 
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        
+        .hero-inner:hover .hero-content {
+            transform: rotateY(var(--rotate-y, 0)) rotateX(var(--rotate-x, 0));
+        }
+
+        .hero-content::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(255, 255, 255, 0.35) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 2; /* Sits above standard background */
+            transition: opacity 0.5s;
+            opacity: 0;
+        }
+        .hero-inner:hover .hero-content::before {
+            opacity: 1;
+        }
+        
+        /* Apply 3D pop out to inner items */
+        .hero-content > * {
+            transform: translateZ(30px);
+            position: relative;
+            z-index: 3;
+        }
+
+        /* ═══════════════ HERO STAR SHIMMER ═══════════════ */
+        .hero-badge .stars i {
+            animation: starPulse 2s ease-in-out infinite;
+        }
+        .hero-badge .stars i:nth-child(1) { animation-delay: 0s; }
+        .hero-badge .stars i:nth-child(2) { animation-delay: 0.15s; }
+        .hero-badge .stars i:nth-child(3) { animation-delay: 0.3s; }
+        .hero-badge .stars i:nth-child(4) { animation-delay: 0.45s; }
+        .hero-badge .stars i:nth-child(5) { animation-delay: 0.6s; }
+
+        @keyframes starPulse {
+            0%, 100% { transform: scale(1); filter: brightness(1); }
+            50% { transform: scale(1.2); filter: brightness(1.4) drop-shadow(0 0 6px rgba(245, 158, 11, 0.6)); }
+        }
+
+        /* ═══════════════ STAGGERED HERO TEXT ═══════════════ */
+        @keyframes heroSlideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hero-badge { animation: heroSlideUp 0.8s 0.2s ease both; }
+        .hero h1 { animation: heroSlideUp 0.8s 0.4s ease both; }
+        .hero p { animation: heroSlideUp 0.8s 0.6s ease both; }
+        .hero-buttons { animation: heroSlideUp 0.8s 0.8s ease both; }
+
+        /* ═══════════════ WAVE DIVIDER ═══════════════ */
+        .wave-divider {
+            position: relative;
+            height: 80px;
+            overflow: hidden;
+            background: transparent;
+            margin-top: -80px;
+            z-index: 10;
+        }
+        .wave-divider svg {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 80px;
+        }
+        .wave-divider-bottom {
+            background: var(--color-white);
+        }
+        .wave-divider-bottom svg {
+            top: 0;
+            bottom: auto;
+        }
+
+        /* ═══════════════ PHOTO SHOWCASE ═══════════════ */
+        .photo-showcase {
+            padding: 80px 40px;
+            background: var(--color-section-alt);
+        }
+        .photo-grid {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-auto-rows: 250px;
+            gap: 20px;
+        }
+        .photo-item {
+            overflow: hidden;
+            position: relative;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            background: #fff;
+        }
+        .photo-item:hover {
+            transform: scale(1.02) rotate(1deg);
+            z-index: 2;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .photo-item:hover img {
+            transform: scale(1.08);
+        }
+        
+        /* Sweep Shine Effect */
+        .photo-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-25deg);
+            z-index: 2;
+            pointer-events: none;
+            transition: none;
+        }
+        .photo-item:hover::before {
+            animation: shine 1s;
+        }
+        @keyframes shine {
+            100% {
+                left: 200%;
+            }
+        }
+
+        /* 3-Image Dynamic shapes */
+        .photo-item:nth-child(1) {
+            grid-column: 1 / 8;
+            grid-row: 1 / 3;
+            border-radius: 30px 8px 60px 8px;
+            clip-path: polygon(0% 0%, 100% 5%, 95% 100%, 0% 95%);
+        }
+        .photo-item:nth-child(2) {
+            grid-column: 8 / 13;
+            grid-row: 1 / 2;
+            border-radius: 8px 40px 8px 30px;
+        }
+        .photo-item:nth-child(3) {
+            grid-column: 8 / 13;
+            grid-row: 2 / 3;
+            border-radius: 30px 8px 40px 8px;
+        }
+
+        @media (max-width: 768px) {
+            .photo-grid {
+                grid-template-columns: 1fr;
+                grid-auto-rows: 250px;
+            }
+            .photo-item:nth-child(1),
+            .photo-item:nth-child(2),
+            .photo-item:nth-child(3) {
+                grid-column: 1 / -1;
+                grid-row: auto;
+                clip-path: none;
+                border-radius: 20px 8px 20px 8px;
+            }
+        }
+
+        /* ═══════════════ GLASSMORPHISM SERVICE CARDS ═══════════════ */
+        .service-card .service-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--color-accent), var(--color-accent-dark));
+            color: white;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            margin: 0 auto 16px;
+            box-shadow: 0 8px 24px rgba(26, 143, 227, 0.25);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .service-card:hover .service-icon {
+            transform: translateY(-4px) rotate(5deg);
+            box-shadow: 0 12px 32px rgba(26, 143, 227, 0.35);
+        }
+
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+</head>
+
+<body>
+    <!-- ═══════════════ HEADER ═══════════════ -->
+    <header class="site-header" id="site-header">
+        <a href="./" class="logo">Spot<span>free</span></a>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="./" class="active">Home</a></li>
+                <li><a href="about/">About</a></li>
+                <li><a href="services/">Services</a></li>
+                <li><a href="bookings/">Bookings</a></li>
+                <li><a href="contact/">Contact</a></li>
+            </ul>
+        </nav>
+        <a href="contact/" class="header-cta">Get a Free Quote</a>
+        <button class="hamburger" id="hamburger" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+    </header>
+
+    <nav class="mobile-nav" id="mobile-nav">
+        <a href="./" class="active">Home</a>
+        <a href="about/">About</a>
+        <a href="services/">Services</a>
+        <a href="bookings/">Bookings</a>
+        <a href="contact/">Contact</a>
+        <a href="contact/" class="mobile-cta">Get a Free Quote</a>
+    </nav>
+
+    <!-- ═══════════════ HERO ═══════════════ -->
+    <section class="hero" id="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-sparkles">
+            <div class="sparkle"></div>
+            <div class="sparkle"></div>
+            <div class="sparkle"></div>
+            <div class="sparkle"></div>
+            <div class="sparkle"></div>
+        </div>
+        <div class="hero-inner">
+            <div class="hero-content">
+                <div class="hero-badge">
+                <span class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
+                <span>5.0 Rated, 211+ Google Reviews</span>
+            </div>
+            <h1>Auckland's Most <span class="accent">Trusted</span> Window & House Cleaning Service</h1>
+            <p>Professional window cleaning, house washing, and pressure washing. Trusted by 200+ Auckland homeowners.
+                Spotless results, every time.</p>
+            <div class="hero-buttons">
+                <a href="contact/" class="btn-primary">Get Your Free Quote</a>
+                <a href="services/" class="btn-outline">Our Services</a>
+            </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <svg viewBox="0 0 24 24">
+                <path d="M12 5v14M5 12l7 7 7-7" />
+            </svg>
+        </div>
+    </section>
+
+
+    <!-- ═══════════════ WAVE DIVIDER ═══════════════ -->
+    <div class="wave-divider">
+        <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+            <path d="M0,40 C360,80 720,0 1080,40 C1260,60 1380,50 1440,40 L1440,80 L0,80 Z" fill="#ffffff"/>
+        </svg>
+    </div>
+
+    <!-- ═══════════════ TRUST STRIP ═══════════════ -->
+    <div class="trust-strip">
+        <div class="trust-strip-inner">
+            <div class="trust-item">
+                <svg class="gold" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                </svg>
+                <span>5.0 Stars on Google</span>
+            </div>
+            <div class="trust-item">
+                <svg class="blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                </svg>
+                <span>211+ Verified Reviews</span>
+            </div>
+            <div class="trust-item">
+                <svg class="green" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                    <polyline points="22 4 12 14.01 9 11.01" />
+                </svg>
+                <span>100% Satisfaction Guarantee</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════ REVIEWS CAROUSEL ═══════════════ -->
+    <section class="reviews-section" id="reviews">
+        <h2 class="section-title">What Our Customers Say</h2>
+        <div class="accent-line"></div>
+        <p class="section-subtitle">211+ five-star reviews from happy Auckland homeowners</p>
+
+        <div class="review-carousel-wrapper">
+            <button class="carousel-nav carousel-prev" id="carousel-prev" aria-label="Previous review">‹</button>
+            <button class="carousel-nav carousel-next" id="carousel-next" aria-label="Next review">›</button>
+            <div class="review-carousel" id="review-carousel">
+                <div class="review-slide">
+                    <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    <p class="review-text">"Highly recommend Luke from Spotfree window cleaning, who we have used on
+                        multiple occasions now. He is easily contactable, personable, reliable, and most importantly
+                        passionate about his work which means a great job is done."</p>
+                    <div class="review-author">Matt O'Rourke</div>
+                    <div class="review-date">Google Review</div>
+                </div>
+                <div class="review-slide">
+                    <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    <p class="review-text">"Hands down Luke is one of the best professionals I have hired services from.
+                        Rarely do you get to see the good 'ol classic work ethics that he possesses... Luke will go far
+                        in whatever he chooses to do. <i class="fa-solid fa-thumbs-up"></i><i class="fa-solid fa-hands-clapping"></i>"</p>
+                    <div class="review-author">Vash Vyas</div>
+                    <div class="review-date">Google Review</div>
+                </div>
+                <div class="review-slide">
+                    <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    <p class="review-text">"Excellent service. Luke went above and beyond to fit us in on short notice.
+                        His work was impeccable. Would certainly recommend him to others."</p>
+                    <div class="review-author">Emily Joubert</div>
+                    <div class="review-date">Google Review</div>
+                </div>
+                <div class="review-slide">
+                    <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    <p class="review-text">"Luke did an amazing job for us. Pleased to find someone who pays so much
+                        attention to detail and works at such a high standard... I'd be more than happy to recommend
+                        Luke as our experience was very positive."</p>
+                    <div class="review-author">Mark Bodna</div>
+                    <div class="review-date">Google Review</div>
+                </div>
+                <div class="review-slide">
+                    <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    <p class="review-text">"Luke did a great job for our window cleaning. He is super friendly and
+                        responsible. He always responds to messages quickly with patience... I would highly recommend
+                        him!"</p>
+                    <div class="review-author">Weiyu Wang</div>
+                    <div class="review-date">Google Review</div>
+                </div>
+                <div class="review-slide">
+                    <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    <p class="review-text">"Luke is very friendly & had great communication throughout the process. We
+                        had super dirty skylights that came up really well after he cleaned them... at a really
+                        reasonable rate too!"</p>
+                    <div class="review-author">Abe Villanueva</div>
+                    <div class="review-date">Google Review</div>
+                </div>
+                <div class="review-slide">
+                    <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    <p class="review-text">"Spotfree did an excellent job with our house wash and window cleaning!
+                        Highly recommended. Luke is passionate about his work and is great to deal with. Thanks Luke"
+                    </p>
+                    <div class="review-author">Bindi Norwell</div>
+                    <div class="review-date">Google Review</div>
+                </div>
+                <div class="review-slide">
+                    <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    <p class="review-text">"Luke is incredibly professional, reliable and simply the best out there! We
+                        really enjoyed meeting him and will be repeat customers in future!"</p>
+                    <div class="review-author">Luna Rioumina</div>
+                    <div class="review-date">Google Review</div>
+                </div>
+                <div class="review-slide">
+                    <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    <p class="review-text">"We're so glad we got Luke to do our windows, inside and out. It was a big
+                        job and they came out so well. Extremely happy. We loved how Luke was down to earth, passionate
+                        and easy to communicate with."</p>
+                    <div class="review-author">Chloe Dickinson</div>
+                    <div class="review-date">Google Review</div>
+                </div>
+                <div class="review-slide">
+                    <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    <p class="review-text">"Spotfree Window Cleaning did a complete house wash, spider treatment, sill &
+                        frame clean, window clean inside and out and
+                        clean, window clean inside and out and pressure clean... Luke did a fantastic job. He provided a
+                        professional, friendly and well priced service."</p>
+                    <div class="review-author">Elizabeth Hanham</div>
+                    <div class="review-date">Google Review</div>
+                </div>
+                <div class="review-slide">
+                    <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    <p class="review-text">"Luke turned up on time. He's reliable, hard working and genuinely cares
+                        about the quality of his work. I will for sure be using his service again. Highly recommended."
+                    </p>
+                    <div class="review-author">Meech Aspden</div>
+                    <div class="review-date">Google Review</div>
+                </div>
+                <div class="review-slide">
+                    <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    <p class="review-text">"Luke does such a great job, we have had him do our windows twice now, and
+                        about to book again. Truly a spotless finish, really good value, highly recommended."</p>
+                    <div class="review-author">Laydee Lala</div>
+                    <div class="review-date">Google Review</div>
+                </div>
+                <div class="review-slide">
+                    <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    <p class="review-text">"Excellent service right from the start. Prompt contact and communication,
+                        Luke kept us updated right through the completion of the job. Very courteous and
+                        service-minded."</p>
+                    <div class="review-author">Madan Kumar</div>
+                    <div class="review-date">Google Review</div>
+                </div>
+                <div class="review-slide">
+                    <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    <p class="review-text">"Pre booking is essential as Luke does get quite busy. However, is worth the
+                        wait, windows were left sparkling clean, inside and out! Absolutely worth it. Great customer
+                        service as well :)"</p>
+                    <div class="review-author">Nikita Soni</div>
+                    <div class="review-date">Google Review</div>
+                </div>
+                <div class="review-slide">
+                    <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    <p class="review-text">"Luke has been cleaning my house exterior over the last two years. I highly
+                        recommend him as he offers an exceptional service and he always does it with a smile!"</p>
+                    <div class="review-author">Rowena Edgeworth</div>
+                    <div class="review-date">Google Review</div>
+                </div>
+            </div>
+            <div class="carousel-dots" id="carousel-dots"></div>
+        </div>
+    </section>
+
+    <!-- ═══════════════ SOCIAL PROOF BREAKDOWN ═══════════════ -->
+    <section class="social-proof-section" id="social-proof">
+        <div class="social-proof-grid">
+            <div class="rating-left fade-in">
+                <div class="rating-number" id="rating-counter">5.0</div>
+                <div class="star-row" id="star-row">
+                    <svg class="star-svg" viewBox="0 0 24 24" fill="#f59e0b">
+                        <path
+                            d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                    </svg>
+                    <svg class="star-svg" viewBox="0 0 24 24" fill="#f59e0b">
+                        <path
+                            d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                    </svg>
+                    <svg class="star-svg" viewBox="0 0 24 24" fill="#f59e0b">
+                        <path
+                            d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                    </svg>
+                    <svg class="star-svg" viewBox="0 0 24 24" fill="#f59e0b">
+                        <path
+                            d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                    </svg>
+                    <svg class="star-svg" viewBox="0 0 24 24" fill="#f59e0b">
+                        <path
+                            d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                    </svg>
+                </div>
+                <div class="rating-label fade-in">
+                    <svg class="google-g" viewBox="0 0 24 24">
+                        <path
+                            d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"
+                            fill="#4285F4" />
+                        <path
+                            d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                            fill="#34A853" />
+                        <path
+                            d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+                            fill="#FBBC05" />
+                        <path
+                            d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                            fill="#EA4335" />
+                    </svg>
+                    <span>211 reviews on Google</span>
+                </div>
+            </div>
+            <div class="bars-right">
+                <div class="bar-row" data-delay="0"><span class="bar-label">5 <i class="fa-solid fa-star"></i></span>
+                    <div class="bar-track">
+                        <div class="bar-fill" style="background: linear-gradient(90deg, #f59e0b, #fbbf24);"
+                            data-width="98%"></div>
+                    </div><span class="bar-percent">98%</span>
+                </div>
+                <div class="bar-row" data-delay="100"><span class="bar-label">4 <i class="fa-solid fa-star"></i></span>
+                    <div class="bar-track">
+                        <div class="bar-fill" style="background: linear-gradient(90deg, #f59e0b, #fbbf24);"
+                            data-width="1%"></div>
+                    </div><span class="bar-percent">1%</span>
+                </div>
+                <div class="bar-row" data-delay="200"><span class="bar-label">3 <i class="fa-solid fa-star"></i></span>
+                    <div class="bar-track">
+                        <div class="bar-fill" style="background: linear-gradient(90deg, #f59e0b, #fbbf24);"
+                            data-width="4px"></div>
+                    </div><span class="bar-percent">&lt;1%</span>
+                </div>
+                <div class="bar-row" data-delay="300"><span class="bar-label">2 <i class="fa-solid fa-star"></i></span>
+                    <div class="bar-track">
+                        <div class="bar-fill" style="background: linear-gradient(90deg, #f59e0b, #fbbf24);"
+                            data-width="2px"></div>
+                    </div><span class="bar-percent">&lt;1%</span>
+                </div>
+                <div class="bar-row" data-delay="400"><span class="bar-label">1 <i class="fa-solid fa-star"></i></span>
+                    <div class="bar-track">
+                        <div class="bar-fill" style="background: linear-gradient(90deg, #f59e0b, #fbbf24);"
+                            data-width="3px"></div>
+                    </div><span class="bar-percent">&lt;1%</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════ SERVICES OVERVIEW ═══════════════ -->
+    <section class="section section-alt" id="services-overview">
+        <h2 class="section-title fade-in">Our Services</h2>
+        <div class="accent-line"></div>
+        <p class="section-subtitle fade-in">Everything your home exterior needs, done by professionals who care</p>
+        <div class="services-grid">
+            <div class="service-card scale-in">
+                <div class="service-icon"><i class="fa-solid fa-window-maximize"></i></div>
+                <h3>Window Cleaning</h3>
+                <p>Crystal-clear windows, inside and out. Streak-free results using professional techniques and purified
+                    water systems.</p>
+            </div>
+            <div class="service-card scale-in">
+                <div class="service-icon"><i class="fa-solid fa-house"></i></div>
+                <h3>House Washing</h3>
+                <p>Restore your home's appearance with a thorough soft wash. Safe for all surfaces: weatherboard,
+                    brick, plaster, and more.</p>
+            </div>
+            <div class="service-card scale-in">
+                <div class="service-icon"><i class="fa-solid fa-spray-can-sparkles"></i></div>
+                <h3>Pressure Washing</h3>
+                <p>Driveways, paths, decks, and patios brought back to life. High-pressure cleaning that removes years
+                    of built-up grime.</p>
+            </div>
+            <div class="service-card scale-in">
+                <div class="service-icon"><i class="fa-solid fa-wrench"></i></div>
+                <h3>Sill & Frame Cleaning</h3>
+                <p>Comprehensive cleaning of window frames, tracks, and sills to remove built-up dirt and ensure a
+                    perfect finish.</p>
+            </div>
+            <div class="service-card scale-in">
+                <div class="service-icon"><i class="fa-solid fa-sun"></i></div>
+                <h3>Skylight Cleaning</h3>
+                <p>Bring the light back in. Hard-to-reach skylights cleaned safely with specialist equipment and
+                    expertise.</p>
+            </div>
+            <div class="service-card scale-in">
+                <div class="service-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                <h3>Full Exterior Package</h3>
+                <p>The complete solution: windows, house wash, spider treatment, frames, and more. One call, one visit,
+                    one stunning
+                    result.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════ WHY CHOOSE US ═══════════════ -->
+    <section class="section" id="why">
+        <h2 class="section-title fade-in">Why Auckland Trusts Spotfree</h2>
+        <div class="accent-line"></div>
+        <p class="section-subtitle fade-in">Here's what makes Luke and the Spotfree team different</p>
+        <div class="why-grid">
+            <div class="why-card fade-in-left">
+                <div class="why-icon"><i class="fa-solid fa-star"></i></div>
+                <div>
+                    <h3>Perfect 5.0 Rating</h3>
+                    <p>211+ reviews and not a single bad one. That's not luck. That's consistent quality every single
+                        time.</p>
+                </div>
+            </div>
+            <div class="why-card fade-in-right">
+                <div class="why-icon"><i class="fa-solid fa-handshake"></i></div>
+                <div>
+                    <h3>Personal Service</h3>
+                    <p>You'll always deal directly with Luke, the owner. No call centres, no strangers. Just real
+                        communication.</p>
+                </div>
+            </div>
+            <div class="why-card fade-in-left">
+                <div class="why-icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
+                <div>
+                    <h3>Quick Response Times</h3>
+                    <p>Luke is known for responding fast and keeping you updated throughout the entire process.</p>
+                </div>
+            </div>
+            <div class="why-card fade-in-right">
+                <div class="why-icon"><i class="fa-solid fa-money-bill-wave"></i></div>
+                <div>
+                    <h3>Fair, Transparent Pricing</h3>
+                    <p>Competitive rates with no hidden fees. What you're quoted is what you pay. Guaranteed.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════ REVIEW WALL ═══════════════ -->
+    <section class="section section-alt" id="review-wall">
+        <h2 class="section-title fade-in">More From Our Happy Customers</h2>
+        <div class="accent-line"></div>
+        <p class="section-subtitle fade-in">Real reviews from real Auckland homeowners</p>
+        <div class="review-wall">
+            <div class="review-card fade-in">
+                <div class="review-card-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                <p class="review-card-text">"Luke did an amazing job for us. Pleased to find someone who pays so much
+                    attention to detail and works at such a high standard."</p>
+                <div class="review-card-author">Mark Bodna</div>
+                <div class="review-card-date">Google Review</div>
+            </div>
+            <div class="review-card fade-in">
+                <div class="review-card-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                <p class="review-card-text">"Luke is very friendly &amp; had great communication throughout the process.
+                    Super dirty skylights came up really well, at a really reasonable rate too!"</p>
+                <div class="review-card-author">Abe Villanueva</div>
+                <div class="review-card-date">Google Review</div>
+            </div>
+            <div class="review-card fade-in">
+                <div class="review-card-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                <p class="review-card-text">"Luke is incredibly professional, reliable and simply the best out there! We
+                    will be repeat customers in future!"</p>
+                <div class="review-card-author">Luna Rioumina</div>
+                <div class="review-card-date">Google Review</div>
+            </div>
+            <div class="review-card fade-in">
+                <div class="review-card-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                <p class="review-card-text">"Excellent service right from the start. Prompt contact and communication,
+                    very courteous and service-minded."</p>
+                <div class="review-card-author">Madan Kumar</div>
+                <div class="review-card-date">Google Review</div>
+            </div>
+            <div class="review-card fade-in">
+                <div class="review-card-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                <p class="review-card-text">"Luke turned up on time. He's reliable, hard working and genuinely cares
+                    about the quality of his work. Highly recommended."</p>
+                <div class="review-card-author">Meech Aspden</div>
+                <div class="review-card-date">Google Review</div>
+            </div>
+            <div class="review-card fade-in">
+                <div class="review-card-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                <p class="review-card-text">"Pre booking is essential as Luke does get quite busy. However, is worth the
+                    wait. Windows were left sparkling clean!"</p>
+                <div class="review-card-author">Nikita Soni</div>
+                <div class="review-card-date">Google Review</div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ═══════════════ PHOTO SHOWCASE ═══════════════ -->
+    <section class="photo-showcase" id="gallery">
+        <h2 class="section-title fade-in">Our Work Speaks for Itself</h2>
+        <div class="accent-line"></div>
+        <p class="section-subtitle fade-in">Real results from Auckland homes — no filters, no stock photos</p>
+        <div class="photo-grid">
+            <div class="photo-item fade-in">
+                <img src="images/real_premium_04.jpg" alt="Premium window detail" loading="lazy">
+            </div>
+            <div class="photo-item fade-in">
+                <img src="images/real_result_10.jpg" alt="Spotless professional results" loading="lazy">
+            </div>
+            <div class="photo-item fade-in">
+                <img src="images/real_vehicle_05.jpg" alt="Spotfree mobile service vehicle" loading="lazy">
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════ CTA BANNER ═══════════════ -->
+    <section class="cta-banner">
+        <h2>Ready for Spotless Results?</h2>
+        <p>Join 200+ happy Auckland homeowners. Get your free, no-obligation quote today.</p>
+        <a href="contact/" class="btn-white">Get Your Free Quote</a>
+    </section>
+
+
+
+    <!-- ═══════════════ FOOTER ═══════════════ -->
+    <footer class="site-footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="footer-logo">Spotfree</div>
+                <p class="footer-tagline">Auckland's top-rated window cleaning and house wash service. 5.0 stars, 211+
+                    Google reviews. Professional, reliable, and always spotless.</p>
+                <div class="footer-rating">
+                    <span class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
+                    <span>5.0 / 211 Reviews</span>
+                </div>
+            </div>
+            <div class="footer-nav">
+                <h4 class="footer-heading">Pages</h4>
+                <ul>
+                    <li><a href="./">Home</a></li>
+                    <li><a href="about/">About</a></li>
+                    <li><a href="services/">Services</a></li>
+                    <li><a href="bookings/">Bookings</a></li>
+                    <li><a href="contact/">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-nav">
+                <h4 class="footer-heading">Services</h4>
+                <ul>
+                    <li><a href="services/">Window Cleaning</a></li>
+                    <li><a href="services/">House Washing</a></li>
+                    <li><a href="services/">Pressure Washing</a></li>
+                    <li><a href="services/">Sill & Frame Cleaning</a></li>
+                    <li><a href="services/">Skylight Cleaning</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4 class="footer-heading">Contact</h4>
+                <p><i class="fa-solid fa-location-dot"></i> Auckland, NZ</p>
+                <p><i class="fa-solid fa-phone"></i> <a href="tel:0210393332">0210 393 332</a></p>
+                <p><i class="fa-solid fa-envelope"></i> <a href="mailto:spotfree.akl@gmail.com">spotfree.akl@gmail.com</a></p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Spotfree Window Cleaning and House Wash. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- ═══════════════ SCRIPTS ═══════════════ -->
+    <script>
+        // Hamburger menu
+        const hamburger = document.getElementById('hamburger');
+        const mobileNav = document.getElementById('mobile-nav');
+        hamburger.addEventListener('click', () => {
+            mobileNav.classList.toggle('open');
+            hamburger.textContent = mobileNav.classList.contains('open') ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-bars"></i>';
+        });
+
+        // Review carousel
+        const carousel = document.getElementById('review-carousel');
+        const slides = carousel.querySelectorAll('.review-slide');
+        const dotsContainer = document.getElementById('carousel-dots');
+        let currentSlide = 0;
+        const totalSlides = slides.length;
+
+        // Create dots
+        slides.forEach((_, i) => {
+            const dot = document.createElement('button');
+            dot.classList.add('carousel-dot');
+            if (i === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => goToSlide(i));
+            dotsContainer.appendChild(dot);
+        });
+
+        function goToSlide(n) {
+            currentSlide = n;
+            carousel.style.transform = `translateX(-${currentSlide * 100}%)`;
+            document.querySelectorAll('.carousel-dot').forEach((d, i) => {
+                d.classList.toggle('active', i === currentSlide);
+            });
+        }
+
+        document.getElementById('carousel-prev').addEventListener('click', () => {
+            goToSlide((currentSlide - 1 + totalSlides) % totalSlides);
+        });
+        document.getElementById('carousel-next').addEventListener('click', () => {
+            goToSlide((currentSlide + 1) % totalSlides);
+        });
+
+        // Auto-advance
+        let autoPlay = setInterval(() => goToSlide((currentSlide + 1) % totalSlides), 5000);
+        document.querySelector('.review-carousel-wrapper').addEventListener('mouseenter', () => clearInterval(autoPlay));
+        document.querySelector('.review-carousel-wrapper').addEventListener('mouseleave', () => {
+            autoPlay = setInterval(() => goToSlide((currentSlide + 1) % totalSlides), 5000);
+        });
+
+        // Touch swipe
+        let touchStartX = 0;
+        carousel.addEventListener('touchstart', e => touchStartX = e.touches[0].clientX, { passive: true });
+        carousel.addEventListener('touchend', e => {
+            const diff = touchStartX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 50) goToSlide(diff > 0 ? (currentSlide + 1) % totalSlides : (currentSlide - 1 + totalSlides) % totalSlides);
+        }, { passive: true });
+
+        // Scroll animations
+        const observerOptions = { threshold: 0.15, rootMargin: '0px 0px -40px 0px' };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+
+                    // Star animations
+                    if (entry.target.closest('#social-proof')) {
+                        document.querySelectorAll('.star-svg').forEach((star, i) => {
+                            setTimeout(() => star.classList.add('visible'), i * 150);
+                        });
+                        document.querySelectorAll('.bar-row').forEach((row, i) => {
+                            setTimeout(() => {
+                                row.classList.add('visible');
+                                const fill = row.querySelector('.bar-fill');
+                                if (fill) fill.style.width = fill.dataset.width;
+                            }, i * 120 + 400);
+                        });
+                        document.querySelectorAll('.rating-label').forEach(l => setTimeout(() => l.classList.add('visible'), 800));
+                    }
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right, .scale-in, .social-proof-label').forEach(el => observer.observe(el));
+
+                // Interactive Glass Glare & 3D Tilt
+        const heroInner = document.querySelector('.hero-inner');
+        const heroCard = document.querySelector('.hero-content');
+        if (heroInner && heroCard) {
+            // Mouse move for glare
+            heroCard.addEventListener('mousemove', e => {
+                const rect = heroCard.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                heroCard.style.setProperty('--mouse-x', `${x}px`);
+                heroCard.style.setProperty('--mouse-y', `${y}px`);
+            });
+
+            // Mouse move for 3D tilt
+            heroInner.addEventListener('mousemove', e => {
+                const rect = heroInner.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                // Adjusted rotation multipliers for a subtle, premium feel
+                const rotateX = ((y - centerY) / centerY) * -6; 
+                const rotateY = ((x - centerX) / centerX) * 6;  
+                
+                heroCard.style.setProperty('--rotate-x', `${rotateX}deg`);
+                heroCard.style.setProperty('--rotate-y', `${rotateY}deg`);
+            });
+
+            heroInner.addEventListener('mouseleave', () => {
+                heroCard.style.setProperty('--rotate-x', '0deg');
+                heroCard.style.setProperty('--rotate-y', '0deg');
+            });
+        }
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('site-header');
+            if (window.scrollY > 50) {
+                header.style.boxShadow = '0 2px 12px rgba(0,0,0,0.08)';
+            } else {
+                header.style.boxShadow = 'none';
+            }
+        });
+
+        // ═══════════════ AI CHAT WIDGET INJECTION ═══════════════ //
+        document.addEventListener('DOMContentLoaded', () => {
+            let pathToChat = 'soap-chat.html';
+
+            const chatBtn = document.createElement('div');
+            chatBtn.className = 'floating-chat-btn';
+            chatBtn.innerHTML = '🫧'; 
+            document.body.appendChild(chatBtn);
+
+            const modal = document.createElement('div');
+            modal.className = 'chat-modal-overlay';
+            modal.innerHTML = `
+                <div class="chat-modal-close">✕</div>
+                <div class="chat-modal-content">
+                    <iframe class="chat-modal-iframe" src="${pathToChat}"></iframe>
+                </div>
+            `;
+            document.body.appendChild(modal);
+
+            const closeBtn = modal.querySelector('.chat-modal-close');
+
+            chatBtn.addEventListener('click', () => {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+
+            closeBtn.addEventListener('click', () => {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+    </script>
+</body>
+
+</html>

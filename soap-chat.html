@@ -1,0 +1,1617 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Luke's Cleaning — Chat</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Nunito+Sans:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --blue-deep: #1D4ED8;
+      --blue-mid: #2563EB;
+      --blue-light: #DBEAFE;
+      --blue-pale: #EFF6FF;
+      --grey-bg: #F1F5F9;
+      --grey-light: #E2E8F0;
+      --grey-mid: #94A3B8;
+      --grey-text: #475569;
+      --text-dark: #1E293B;
+      --white: #FFFFFF;
+      --success: #10B981;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+      --shadow: 0 4px 24px rgba(37, 99, 235, 0.10);
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.07);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Nunito Sans', sans-serif;
+      margin: 0; padding: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: #0a0a0f;
+    }
+
+    /* ── SOAPY GLASS BACKGROUND ── */
+    .bg-scene {
+      position: fixed; inset: 0; z-index: 0;
+    }
+    .bg-image {
+      position: absolute; inset: 0;
+      background: url('assets/auckland-sunset.jpg') no-repeat center center;
+      background-size: cover;
+    }
+    #soap-canvas {
+      position: absolute; inset: 0;
+      z-index: 2;
+      pointer-events: none; /* Let events pass through to chat, we listen on window */
+    }
+
+    /* ── CHAT SHELL (glassmorphism) ── */
+    .chat-wrapper {
+      position: relative; z-index: 10;
+      padding: 16px;
+    }
+
+    /* ── CHAT SHELL ── */
+    .chat-shell {
+      width: 100%;
+      max-width: 480px;
+      height: 92vh;
+      max-height: 780px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255,0.3);
+      box-shadow:
+        0 8px 48px rgba(0, 0, 0, 0.25),
+        0 2px 12px rgba(0, 0, 0, 0.12),
+        inset 0 1px 0 rgba(255,255,255,0.5);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      animation: rise .45s cubic-bezier(.22, 1, .36, 1) both;
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(22px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ── HEADER ── */
+    .chat-header {
+      background: linear-gradient(135deg, var(--blue-deep) 0%, var(--blue-mid) 100%);
+      padding: 18px 20px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .header-avatar {
+      width: 42px;
+      height: 42px;
+      background: rgba(255, 255, 255, 0.18);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .header-info {
+      flex: 1;
+    }
+
+    .header-name {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 16px;
+      color: var(--white);
+      line-height: 1.2;
+    }
+
+    .header-status {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.75);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 2px;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      background: #4ADE80;
+      border-radius: 50%;
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: .4;
+      }
+    }
+
+    /* ── MESSAGES AREA ── */
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 16px 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      scroll-behavior: smooth;
+    }
+
+    .chat-messages::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .chat-messages::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .chat-messages::-webkit-scrollbar-thumb {
+      background: var(--grey-light);
+      border-radius: 4px;
+    }
+
+    /* ── MESSAGE ROWS ── */
+    .msg-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      animation: fadeUp .28s ease both;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .msg-row.user {
+      flex-direction: row-reverse;
+    }
+
+    .msg-avatar {
+      width: 28px;
+      height: 28px;
+      background: var(--blue-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      flex-shrink: 0;
+      margin-bottom: 2px;
+    }
+
+    .bubble {
+      max-width: 78%;
+      padding: 10px 14px;
+      border-radius: var(--radius-lg);
+      font-size: 14.5px;
+      line-height: 1.55;
+      color: var(--text-dark);
+    }
+
+    .msg-row.bot .bubble {
+      background: var(--grey-bg);
+      border-bottom-left-radius: 4px;
+    }
+
+    .msg-row.user .bubble {
+      background: var(--blue-mid);
+      color: var(--white);
+      border-bottom-right-radius: 4px;
+    }
+
+    /* system / action log rows */
+    .msg-row.system {
+      justify-content: center;
+      margin: 4px 0;
+    }
+
+    .system-pill {
+      background: var(--blue-pale);
+      border: 1px solid var(--blue-light);
+      color: var(--blue-deep);
+      font-size: 11.5px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+    }
+
+    /* ── TYPING INDICATOR ── */
+    .typing-indicator {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 12px 14px;
+    }
+
+    .typing-indicator span {
+      width: 7px;
+      height: 7px;
+      background: var(--grey-mid);
+      border-radius: 50%;
+      animation: bounce 1.2s ease-in-out infinite;
+    }
+
+    .typing-indicator span:nth-child(2) {
+      animation-delay: .18s;
+    }
+
+    .typing-indicator span:nth-child(3) {
+      animation-delay: .36s;
+    }
+
+    @keyframes bounce {
+
+      0%,
+      60%,
+      100% {
+        transform: translateY(0);
+      }
+
+      30% {
+        transform: translateY(-6px);
+      }
+    }
+
+    /* ── QUICK REPLIES ── */
+    .quick-replies {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 4px 0 10px 36px;
+      animation: fadeUp .3s ease both;
+    }
+
+    .qr-btn {
+      background: var(--white);
+      border: 1.5px solid var(--blue-mid);
+      color: var(--blue-mid);
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      padding: 7px 13px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all .18s ease;
+      white-space: nowrap;
+    }
+
+    .qr-btn:hover {
+      background: var(--blue-mid);
+      color: var(--white);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+    }
+
+    .qr-btn.primary {
+      background: var(--blue-mid);
+      color: var(--white);
+    }
+
+    .qr-btn.primary:hover {
+      background: var(--blue-deep);
+    }
+
+    /* ── QUOTE FORM CARD ── */
+    .form-card {
+      background: var(--white);
+      border: 1.5px solid var(--blue-light);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      margin: 4px 0 4px 36px;
+      box-shadow: var(--shadow-sm);
+      animation: fadeUp .3s ease both;
+    }
+
+    .form-card-title {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 15px;
+      color: var(--blue-deep);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--grey-text);
+      margin-bottom: 5px;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .form-select,
+    .form-input {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1.5px solid var(--grey-light);
+      border-radius: var(--radius-sm);
+      font-family: 'Nunito Sans', sans-serif;
+      font-size: 14px;
+      color: var(--text-dark);
+      background: var(--grey-bg);
+      outline: none;
+      transition: border-color .15s;
+      appearance: none;
+    }
+
+    .form-select:focus,
+    .form-input:focus {
+      border-color: var(--blue-mid);
+      background: var(--white);
+    }
+
+    .form-select.error,
+    .form-input.error {
+      border-color: #EF4444;
+      background: #FEF2F2;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .form-row .form-group {
+      flex: 1;
+    }
+
+    .checkbox-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--grey-bg);
+      border: 1.5px solid var(--grey-light);
+      border-radius: var(--radius-sm);
+      padding: 7px 10px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--grey-text);
+      transition: all .15s;
+      user-select: none;
+    }
+
+    .checkbox-item input {
+      display: none;
+    }
+
+    .checkbox-item.checked {
+      background: var(--blue-pale);
+      border-color: var(--blue-mid);
+      color: var(--blue-deep);
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 11px;
+      background: linear-gradient(135deg, var(--blue-mid), var(--blue-deep));
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius-md);
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 15px;
+      cursor: pointer;
+      transition: all .18s ease;
+      margin-top: 4px;
+      letter-spacing: .02em;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.3);
+    }
+
+    .submit-btn:active {
+      transform: translateY(0);
+    }
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* ── SUBURB AUTOCOMPLETE ── */
+    .suburb-wrapper { position: relative; }
+    .suburb-dropdown {
+      position: absolute; top: 100%; left: 0; right: 0; z-index: 10;
+      background: var(--white); border: 1.5px solid var(--blue-light);
+      border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+      max-height: 160px; overflow-y: auto;
+      box-shadow: var(--shadow-sm); display: none;
+    }
+    .suburb-dropdown.open { display: block; }
+    .suburb-option {
+      padding: 8px 12px; font-size: 13px; cursor: pointer;
+      color: var(--text-dark); transition: background .1s;
+    }
+    .suburb-option:hover, .suburb-option.active {
+      background: var(--blue-pale); color: var(--blue-deep);
+    }
+
+    /* ── ESTIMATE CARD ── */
+    .estimate-card {
+      background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+      border: 1.5px solid var(--blue-light);
+      border-radius: var(--radius-lg);
+      padding: 16px 18px; margin: 6px 0 6px 36px;
+      animation: fadeUp .3s ease both;
+    }
+    .estimate-title {
+      font-family: 'Nunito', sans-serif; font-weight: 800;
+      font-size: 14px; color: var(--blue-deep); margin-bottom: 10px;
+    }
+    .estimate-line {
+      display: flex; justify-content: space-between;
+      font-size: 13px; padding: 3px 0; color: var(--grey-text);
+    }
+    .estimate-line .label { font-weight: 600; }
+    .estimate-line .price { font-weight: 700; color: var(--text-dark); }
+    .estimate-total {
+      display: flex; justify-content: space-between;
+      font-size: 15px; padding: 8px 0 0; margin-top: 8px;
+      border-top: 1.5px solid var(--blue-light);
+      font-family: 'Nunito', sans-serif; font-weight: 800;
+      color: var(--blue-deep);
+    }
+    .estimate-note {
+      font-size: 11px; color: var(--grey-mid); margin-top: 8px;
+      line-height: 1.4;
+    }
+
+    /* ── DIVIDER ── */
+    .chat-divider {
+      height: 1px;
+      background: var(--grey-light);
+      margin: 0 16px;
+      flex-shrink: 0;
+    }
+
+    /* ── INPUT BAR ── */
+    .chat-input-bar {
+      padding: 12px 14px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--white);
+      flex-shrink: 0;
+    }
+
+    .chat-input {
+      flex: 1;
+      padding: 11px 16px;
+      background: var(--grey-bg);
+      border: 1.5px solid transparent;
+      border-radius: 24px;
+      font-family: 'Nunito Sans', sans-serif;
+      font-size: 14.5px;
+      color: var(--text-dark);
+      outline: none;
+      transition: border-color .15s, background .15s;
+      resize: none;
+      height: 44px;
+      line-height: 1.4;
+    }
+
+    .chat-input:focus {
+      border-color: var(--blue-mid);
+      background: var(--white);
+    }
+
+    .chat-input::placeholder {
+      color: var(--grey-mid);
+    }
+
+    .send-btn {
+      width: 42px;
+      height: 42px;
+      background: var(--blue-mid);
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all .18s ease;
+      box-shadow: 0 3px 10px rgba(37, 99, 235, 0.3);
+    }
+
+    .send-btn:hover {
+      background: var(--blue-deep);
+      transform: scale(1.05);
+    }
+
+    .send-btn:active {
+      transform: scale(.96);
+    }
+
+    .send-btn svg {
+      width: 18px;
+      height: 18px;
+      fill: white;
+    }
+
+    /* ── TIMESTAMP ── */
+    .msg-time {
+      font-size: 10.5px;
+      color: var(--grey-mid);
+      text-align: center;
+      margin: 8px 0 4px;
+    }
+
+    /* ── LOCKED INPUT ── */
+    .chat-input-bar.locked .chat-input {
+      pointer-events: none; opacity: 0.5;
+    }
+    .chat-input-bar.locked .send-btn {
+      pointer-events: none; opacity: 0.4;
+    }
+
+    /* ── CONFIRMATION CARD ── */
+    .confirm-card {
+      background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+      border: 1.5px solid #6EE7B7;
+      border-radius: var(--radius-lg);
+      padding: 16px 18px; margin: 6px 0 6px 36px;
+      animation: fadeUp .3s ease both;
+      text-align: center;
+    }
+    .confirm-card .confirm-icon { font-size: 28px; margin-bottom: 6px; }
+    .confirm-card .confirm-title {
+      font-family: 'Nunito', sans-serif; font-weight: 800;
+      font-size: 14px; color: #065F46; margin-bottom: 4px;
+    }
+    .confirm-card .confirm-text {
+      font-size: 12.5px; color: #047857; line-height: 1.5;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- SOAPY BACKGROUND -->
+  <div class="bg-scene">
+    <div class="bg-image"></div>
+    <canvas id="soap-canvas"></canvas>
+  </div>
+
+  <div class="chat-wrapper">
+  <div class="chat-shell">
+
+    <!-- HEADER -->
+    <div class="chat-header">
+      <div class="header-avatar">🧹</div>
+      <div class="header-info">
+        <div class="header-name">Luke's Cleaning</div>
+        <div class="header-status">
+          <span class="status-dot"></span>
+          Online now
+        </div>
+      </div>
+    </div>
+
+    <!-- MESSAGES -->
+    <div class="chat-messages" id="messages">
+      <div class="msg-time" id="time-label"></div>
+    </div>
+
+    <!-- DIVIDER -->
+    <div class="chat-divider"></div>
+
+    <!-- INPUT BAR -->
+    <div class="chat-input-bar">
+      <input class="chat-input" id="chat-input" type="text" placeholder="Type a message…" autocomplete="off"
+        onkeydown="handleKey(event)" />
+      <button class="send-btn" onclick="handleSend()">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+        </svg>
+      </button>
+    </div>
+  </div><!-- end chat-shell -->
+  </div><!-- end chat-wrapper -->
+
+  <script>
+    // ── SOAP SUDS PARTICLE ENGINE ──
+    (function() {
+      const canvas = document.getElementById('soap-canvas');
+      const ctx = canvas.getContext('2d');
+      let W, H;
+      let particles = [];
+      let lastX = null, lastY = null;
+
+      function resize() {
+        W = canvas.width = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+      }
+      window.addEventListener('resize', resize);
+      resize();
+
+      class SoapBubble {
+        constructor(x, y, dx, dy) {
+          this.x = x + (Math.random() - 0.5) * 25;
+          this.y = y + (Math.random() - 0.5) * 25;
+          // Initial velocity based on mouse flick + random spread
+          this.vx = dx * 0.15 + (Math.random() - 0.5) * 4;
+          this.vy = dy * 0.15 + (Math.random() - 0.5) * 4;
+          this.radius = Math.random() * 12 + 4;
+          this.life = 1.0;
+          this.decay = Math.random() * 0.015 + 0.005; // Lasts ~1-3 seconds
+        }
+
+        update() {
+          // Glass friction
+          this.vx *= 0.90;
+          this.vy *= 0.90;
+          // Gravity pull down the window
+          this.vy += 0.12;
+          
+          this.x += this.vx;
+          this.y += this.vy;
+          this.life -= this.decay;
+        }
+
+        draw(ctx) {
+          if (this.life <= 0) return;
+          const r = Math.max(0.1, this.radius * Math.sqrt(this.life));
+          
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(240, 248, 255, ${0.4 * this.life})`; 
+          ctx.fill();
+          
+          ctx.lineWidth = 1.5;
+          ctx.strokeStyle = `rgba(255, 255, 255, ${0.7 * this.life})`;
+          ctx.stroke();
+
+          // Specular highlight bubble reflection
+          ctx.beginPath();
+          ctx.arc(this.x - r*0.3, this.y - r*0.3, r*0.25, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255, 255, 255, ${0.9 * this.life})`;
+          ctx.fill();
+        }
+      }
+
+      window.addEventListener('mousemove', (e) => {
+        const currentX = e.clientX;
+        const currentY = e.clientY;
+        
+        if (lastX !== null && lastY !== null) {
+          const dx = currentX - lastX;
+          const dy = currentY - lastY;
+          // Emit a burst of soap bubbles based on distance moved
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          const numParticles = Math.min(10, Math.floor(dist / 5) + 2);
+          
+          for (let i = 0; i < numParticles; i++) {
+            particles.push(new SoapBubble(currentX, currentY, dx, dy));
+          }
+        }
+        
+        lastX = currentX;
+        lastY = currentY;
+      });
+
+      // Reset mouse tracking when leaving
+      window.addEventListener('mouseleave', () => {
+        lastX = null;
+        lastY = null;
+      });
+
+      function animate() {
+        ctx.clearRect(0, 0, W, H);
+        
+        for (let i = particles.length - 1; i >= 0; i--) {
+          const p = particles[i];
+          p.update();
+          p.draw(ctx);
+          if (p.life <= 0) {
+            particles.splice(i, 1);
+          }
+        }
+        
+        requestAnimationFrame(animate);
+      }
+      animate();
+    })();
+  </script>
+
+  <script>
+    // ── CONFIG ──────────────────────────────────────────────
+    const N8N_WEBHOOK = "https://n8n.arfquant.com/webhook/f023815a-3b3a-42e2-97d9-4e1a9ebb3f3b";
+    const BOT_NAME = "Luke's Assistant";
+    const TYPING_MS = 18; // ms per character for typing animation
+
+    // ── STATE ───────────────────────────────────────────────
+    let chatHistory = []; // full history sent to n8n each time
+    let quickRepliesShown = false;
+    let formShown = false;
+    let isProcessing = false;
+    let lastMessageTime = 0;
+
+    function lockInput() {
+      isProcessing = true;
+      const bar = document.querySelector('.chat-input-bar');
+      if (bar) bar.classList.add('locked');
+    }
+    function unlockInput() {
+      isProcessing = false;
+      const bar = document.querySelector('.chat-input-bar');
+      if (bar) bar.classList.remove('locked');
+    }
+
+    // ── INIT ─────────────────────────────────────────────────
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("time-label").textContent = formatTime(new Date());
+      setTimeout(() => {
+        showTyping(800).then(() => {
+          const greeting = "Hi there! 👋 Welcome to Spotfree. How can I help you today?";
+          addBotMessage(greeting, true).then(() => {
+            if (!quickRepliesShown) showQuickReplies();
+          });
+        });
+      }, 600);
+    });
+
+    // ── QUICK REPLIES ────────────────────────────────────────
+    function showQuickReplies() {
+      quickRepliesShown = true;
+      const container = document.getElementById("messages");
+
+      const qr = document.createElement("div");
+      qr.className = "quick-replies";
+      qr.id = "quick-replies";
+      qr.innerHTML = `
+    <button class="qr-btn primary" onclick="handleQuickReply('get_quote')">💰 Get a Quote</button>
+    <button class="qr-btn primary" onclick="handleQuickReply('book')">📅 Book a Visit</button>
+    <button class="qr-btn primary" onclick="handleQuickReply('callback')">📞 Talk to Luke</button>
+    <button class="qr-btn" onclick="handleQuickReply('what_services')">🧹 What services?</button>
+    <button class="qr-btn" onclick="handleQuickReply('how_long')">⏱ How long?</button>
+    <button class="qr-btn" onclick="handleQuickReply('areas')">📍 What areas?</button>
+  `;
+      container.appendChild(qr);
+      scrollToBottom();
+    }
+
+    function removeQuickReplies() {
+      const el = document.getElementById("quick-replies");
+      if (el) el.remove();
+    }
+
+    // ── QUICK REPLY HANDLER ──────────────────────────────────
+    // Predetermined responses — no API calls for these
+    const QUICK_ANSWERS = {
+      what_services: "We offer exterior window cleaning, interior window cleaning, house soft washing, driveway & path water blasting, gutter cleaning, and roof treatments. All exterior property care — Luke brings everything he needs! 🏠",
+      how_long: "It depends on the property, but as a rough guide: windows on a standard 3-bed take about 1–2 hours. A full house wash can take 3–5 hours. Luke will give you a more accurate timeframe after seeing your place! ⏱",
+      areas: "Luke services all of Auckland — from Albany and the North Shore right down to Manukau and Pukekohe. He even covers Waiheke Island! Drop your suburb in the quote form and we'll confirm 📍"
+    };
+
+    function handleQuickReply(action) {
+      removeQuickReplies();
+
+      if (action === "get_quote") {
+        addUserMessage("💰 Get a Quote", false);
+        logSystemEvent("USER_CLICKED_GET_QUOTE", { trigger: "quick_reply_button" });
+        setTimeout(() => showQuoteForm(), 400);
+        return;
+      }
+
+      if (action === "book") {
+        addUserMessage("📅 I'd like to book a visit", false);
+        logSystemEvent("BOT_TRIGGERED_BOOKING", {});
+        lockInput();
+        showTyping(600).then(() => {
+          addBotMessage("Awesome! Fill in your details below and Luke will be in touch to lock in a time 📅", true).then(() => {
+            unlockInput();
+            showBookingForm();
+          });
+        });
+        return;
+      }
+
+      if (action === "callback") {
+        addUserMessage("📞 I'd like to talk to Luke", false);
+        logSystemEvent("BOT_TRIGGERED_CALLBACK", {});
+        lockInput();
+        showTyping(600).then(() => {
+          addBotMessage("No worries! Leave your number below and Luke will give you a ring when he's free 📞", true).then(() => {
+            unlockInput();
+            showCallbackForm();
+          });
+        });
+        return;
+      }
+
+      // Predetermined answers — no API call
+      const labels = {
+        what_services: "What services do you offer?",
+        how_long: "How long does it usually take?",
+        areas: "What areas do you service?"
+      };
+      const text = labels[action] || action;
+      addUserMessage(text, false);
+
+      const answer = QUICK_ANSWERS[action];
+      if (answer) {
+        lockInput();
+        showTyping(800).then(() => {
+          addBotMessage(answer, true).then(() => {
+            unlockInput();
+          });
+        });
+      } else {
+        sendToN8N(text);
+      }
+    }
+
+    // ── QUOTE FORM ───────────────────────────────────────────
+    function showQuoteForm() {
+      if (formShown) return;
+      formShown = true;
+      lockInput();
+
+      showTyping(800).then(() => {
+        addBotMessage("No worries! Fill out the quick form below and I'll give you an estimate right away 😊", true).then(() => {
+          unlockInput();
+          const container = document.getElementById("messages");
+          const card = document.createElement("div");
+          card.className = "form-card";
+          card.id = "quote-form-card";
+          card.innerHTML = `
+        <div class="form-card-title">✏️ Quick Quote Details</div>
+
+        <div class="form-group">
+          <label class="form-label">Property Type</label>
+          <select class="form-select" id="f-property-type" oninput="this.classList.remove('error')">
+            <option value="">Select…</option>
+            <option value="single_story">Single Story Residential</option>
+            <option value="two_story">Two Story Residential</option>
+            <option value="three_story">Three Story+ Residential</option>
+            <option value="commercial">Commercial / Retail</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">House Size</label>
+            <select class="form-select" id="f-home-size" oninput="this.classList.remove('error')">
+              <option value="">—</option>
+              <option value="1-2_bed">1 - 2 Bedrooms</option>
+              <option value="3-4_bed">3 - 4 Bedrooms</option>
+              <option value="5_plus">5+ Bedrooms</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Water Supply?</label>
+            <select class="form-select" id="f-water" oninput="this.classList.remove('error')">
+              <option value="">—</option>
+              <option value="yes">Yes (Tap)</option>
+              <option value="no">No / Tank</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Services Required (select all that apply)</label>
+          <div class="checkbox-grid" id="services-grid" style="grid-template-columns: 1fr;">
+            <label class="checkbox-item">
+              <input type="checkbox" value="Exterior Windows" onchange="this.parentElement.classList.toggle('checked', this.checked); document.getElementById('services-grid').style.border='none'" /> 🪟 Exterior Window Cleaning
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" value="Interior Windows" onchange="this.parentElement.classList.toggle('checked', this.checked); document.getElementById('services-grid').style.border='none'" /> ✨ Interior Window Cleaning
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" value="House Soft Wash" onchange="this.parentElement.classList.toggle('checked', this.checked); document.getElementById('services-grid').style.border='none'" /> 🏠 House Soft Wash
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" value="Water Blasting" onchange="this.parentElement.classList.toggle('checked', this.checked); document.getElementById('services-grid').style.border='none'" /> 💦 Driveway/Path Water Blasting
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" value="Gutter Cleaning" onchange="this.parentElement.classList.toggle('checked', this.checked); document.getElementById('services-grid').style.border='none'" /> 🍂 Gutter Cleaning
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" value="Roof Treatment" onchange="this.parentElement.classList.toggle('checked', this.checked); document.getElementById('services-grid').style.border='none'" /> 🛖 Roof Treatment
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">How often?</label>
+          <select class="form-select" id="f-frequency" oninput="this.classList.remove('error')">
+            <option value="">Select…</option>
+            <option value="one_off">One-off / As needed</option>
+            <option value="6_months">Every 6 Months</option>
+            <option value="annual">Annual Wash</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Your Suburb / Area</label>
+          <div class="suburb-wrapper">
+            <input class="form-input" id="f-suburb" type="text" placeholder="Start typing… e.g. Epsom" autocomplete="off"
+              oninput="this.classList.remove('error'); filterSuburbs(this.value)" onfocus="filterSuburbs(this.value)" />
+            <div class="suburb-dropdown" id="suburb-dropdown"></div>
+          </div>
+        </div>
+
+        <button class="submit-btn" id="f-submit-btn" onclick="submitQuoteForm()">Get My Estimate →</button>
+      `;
+      // Close dropdown when clicking outside
+      document.addEventListener('click', function closeDD(e) {
+        if (!e.target.closest('.suburb-wrapper')) {
+          const dd = document.getElementById('suburb-dropdown');
+          if (dd) dd.classList.remove('open');
+        }
+      });
+          container.appendChild(card);
+          setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'end' }), 50);
+        });
+      });
+    }
+
+    // ── AUCKLAND SUBURBS ─────────────────────────────────────
+    const AUCKLAND_SUBURBS = [
+      'Albany','Avondale','Birkenhead','Blockhouse Bay','Botany Downs','Browns Bay',
+      'Bucklands Beach','CBD / City Centre','Chatswood','Cockle Bay','Devonport',
+      'East Tamaki','Ellerslie','Epsom','Flat Bush','Glen Eden','Glen Innes',
+      'Glendowie','Glenfield','Grafton','Greenlane','Grey Lynn','Half Moon Bay',
+      'Henderson','Herne Bay','Hobsonville','Howick','Kingsland','Kohimarama',
+      'Mairangi Bay','Mangere','Manukau','Manurewa','Massey','Meadowbank',
+      'Mission Bay','Mt Albert','Mt Eden','Mt Roskill','Mt Wellington',
+      'Newmarket','North Shore','Onehunga','Orakei','Otahuhu','Parnell',
+      'Penrose','Point Chevalier','Ponsonby','Pukekohe','Ranui','Remuera',
+      'Royal Oak','Sandringham','St Heliers','Stonefields','Takapuna',
+      'Te Atatu','Titirangi','Waiheke Island','Westmere','Western Springs'
+    ];
+
+    function filterSuburbs(val) {
+      const dd = document.getElementById('suburb-dropdown');
+      if (!dd) return;
+      const q = val.toLowerCase();
+      if (q.length < 1) { dd.classList.remove('open'); dd.innerHTML = ''; return; }
+      const matches = AUCKLAND_SUBURBS.filter(s => s.toLowerCase().includes(q)).slice(0, 8);
+      if (matches.length === 0) { dd.classList.remove('open'); dd.innerHTML = ''; return; }
+      dd.innerHTML = matches.map(s => `<div class="suburb-option" onmousedown="pickSuburb('${s}')">${s}</div>`).join('');
+      dd.classList.add('open');
+    }
+    function pickSuburb(name) {
+      const input = document.getElementById('f-suburb');
+      input.value = name;
+      input.classList.remove('error');
+      const dd = document.getElementById('suburb-dropdown');
+      if (dd) { dd.classList.remove('open'); dd.innerHTML = ''; }
+    }
+
+    // ── PRICING ENGINE ────────────────────────────────────────
+    // Base prices per service, by property type & size (NZD)
+    const PRICING = {
+      'Exterior Windows': {
+        single_story:  { '1-2_bed': 120, '3-4_bed': 180, '5_plus': 260 },
+        two_story:     { '1-2_bed': 180, '3-4_bed': 260, '5_plus': 380 },
+        three_story:   { '1-2_bed': 280, '3-4_bed': 380, '5_plus': 500 },
+        commercial:    { '1-2_bed': 200, '3-4_bed': 350, '5_plus': 550 }
+      },
+      'Interior Windows': {
+        single_story:  { '1-2_bed': 80,  '3-4_bed': 130, '5_plus': 200 },
+        two_story:     { '1-2_bed': 120, '3-4_bed': 180, '5_plus': 280 },
+        three_story:   { '1-2_bed': 180, '3-4_bed': 260, '5_plus': 380 },
+        commercial:    { '1-2_bed': 150, '3-4_bed': 250, '5_plus': 400 }
+      },
+      'House Soft Wash': {
+        single_story:  { '1-2_bed': 250, '3-4_bed': 350, '5_plus': 500 },
+        two_story:     { '1-2_bed': 350, '3-4_bed': 500, '5_plus': 700 },
+        three_story:   { '1-2_bed': 500, '3-4_bed': 700, '5_plus': 950 },
+        commercial:    { '1-2_bed': 400, '3-4_bed': 600, '5_plus': 900 }
+      },
+      'Water Blasting': {
+        single_story:  { '1-2_bed': 150, '3-4_bed': 220, '5_plus': 320 },
+        two_story:     { '1-2_bed': 200, '3-4_bed': 300, '5_plus': 420 },
+        three_story:   { '1-2_bed': 280, '3-4_bed': 380, '5_plus': 520 },
+        commercial:    { '1-2_bed': 250, '3-4_bed': 400, '5_plus': 600 }
+      },
+      'Gutter Cleaning': {
+        single_story:  { '1-2_bed': 100, '3-4_bed': 150, '5_plus': 220 },
+        two_story:     { '1-2_bed': 150, '3-4_bed': 220, '5_plus': 320 },
+        three_story:   { '1-2_bed': 220, '3-4_bed': 320, '5_plus': 450 },
+        commercial:    { '1-2_bed': 180, '3-4_bed': 280, '5_plus': 420 }
+      },
+      'Roof Treatment': {
+        single_story:  { '1-2_bed': 350, '3-4_bed': 500, '5_plus': 700 },
+        two_story:     { '1-2_bed': 500, '3-4_bed': 700, '5_plus': 950 },
+        three_story:   { '1-2_bed': 700, '3-4_bed': 950, '5_plus': 1300 },
+        commercial:    { '1-2_bed': 550, '3-4_bed': 800, '5_plus': 1100 }
+      }
+    };
+
+    // Frequency discounts
+    const FREQ_DISCOUNT = { one_off: 0, '6_months': 0.10, annual: 0.05 };
+
+    function calculateEstimate(propertyType, homeSize, services, frequency) {
+      const lineItems = [];
+      let subtotal = 0;
+      services.forEach(svc => {
+        const base = PRICING[svc]?.[propertyType]?.[homeSize] || 0;
+        lineItems.push({ service: svc, price: base });
+        subtotal += base;
+      });
+      const discount = FREQ_DISCOUNT[frequency] || 0;
+      const discountAmt = Math.round(subtotal * discount);
+      const total = subtotal - discountAmt;
+      return { lineItems, subtotal, discount, discountAmt, total };
+    }
+
+    function submitQuoteForm() {
+      const btn = document.getElementById("f-submit-btn");
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = "Calculating...";
+      }
+
+      const propertyType = document.getElementById("f-property-type").value;
+      const homeSize     = document.getElementById("f-home-size").value;
+      const water        = document.getElementById("f-water").value;
+      const frequency    = document.getElementById("f-frequency").value;
+      const suburb       = document.getElementById("f-suburb").value.trim();
+      const services     = [...document.querySelectorAll("#services-grid .checked input")]
+                           .map(i => i.value);
+
+      const reqFields = ["f-property-type", "f-home-size", "f-water", "f-frequency", "f-suburb"];
+      let hasError = false;
+      reqFields.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el.value.trim()) {
+          el.classList.add("error");
+          hasError = true;
+        }
+      });
+
+      if (services.length === 0) {
+        document.getElementById("services-grid").style.border = "1.5px solid #EF4444";
+        document.getElementById("services-grid").style.borderRadius = "8px";
+        document.getElementById("services-grid").style.padding = "4px";
+        hasError = true;
+      }
+
+      if (hasError) {
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = "Get My Estimate \u2192";
+        }
+        return;
+      }
+
+      // Remove the form cleanly
+      const formCard = document.getElementById("quote-form-card");
+      if (formCard) formCard.remove();
+      formShown = false;
+
+      // Labels
+      const propLabels  = { single_story: "Single Story", two_story: "Two Story", three_story: "Three Story+", commercial: "Commercial" };
+      const sizeLabels  = { '1-2_bed': '1-2 Bed', '3-4_bed': '3-4 Bed', '5_plus': '5+ Bed' };
+      const waterLabels = { yes: "Tap available", no: "No/Tank water" };
+      const freqLabels  = { one_off: "One-off", '6_months': "Every 6 Months", annual: "Annual" };
+
+      const summary = `Here are my property details:\n\u2022 Property: ${propLabels[propertyType]} (${sizeLabels[homeSize]})\n\u2022 Services: ${services.join(', ')}\n\u2022 Water Supply: ${waterLabels[water]}\n\u2022 Frequency: ${freqLabels[frequency]}\n\u2022 Suburb: ${suburb}`;
+
+      addUserMessage(summary, false);
+
+      // Log structured data
+      const formData = { propertyType, homeSize, water, frequency, services, suburb };
+      logSystemEvent("QUOTE_FORM_SUBMITTED", formData);
+
+      // Calculate the estimate
+      const est = calculateEstimate(propertyType, homeSize, services, frequency);
+
+      // Show typing then display estimate
+      lockInput();
+      showTyping(1200).then(() => {
+        const msg = `Here's your estimate for a ${propLabels[propertyType].toLowerCase()} property in ${suburb} \ud83c\udfe0`;
+        addBotMessage(msg, true).then(() => {
+          // Inject the estimate card
+          const container = document.getElementById("messages");
+          const card = document.createElement("div");
+          card.className = "estimate-card";
+
+          let linesHtml = est.lineItems.map(li =>
+            `<div class="estimate-line"><span class="label">${li.service}</span><span class="price">$${li.price}</span></div>`
+          ).join('');
+
+          if (est.discountAmt > 0) {
+            const pctLabel = Math.round(est.discount * 100);
+            linesHtml += `<div class="estimate-line" style="color:var(--success)"><span class="label">${freqLabels[frequency]} discount (${pctLabel}%)</span><span class="price">-$${est.discountAmt}</span></div>`;
+          }
+
+          card.innerHTML = `
+            <div class="estimate-title">\ud83d\udcb0 Your Estimated Quote</div>
+            ${linesHtml}
+            <div class="estimate-total">
+              <span>Estimated Total</span>
+              <span>$${est.total} NZD</span>
+            </div>
+            <div class="estimate-note">* This is an approximate guide only. Final pricing may vary based on access, condition, and on-site assessment. Luke will confirm exact pricing before any work begins.</div>
+          `;
+          container.appendChild(card);
+          scrollToBottom();
+
+          // Follow up message
+          setTimeout(() => {
+            showTyping(800).then(() => {
+              addBotMessage("Would you like to book a time for Luke to come take a look? Or do you have any questions about the services? \ud83d\ude0a", true).then(() => unlockInput());
+            });
+          }, 600);
+        });
+      });
+    }
+
+    // ── SEND MESSAGE ─────────────────────────────────────────
+    function handleKey(e) {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        handleSend();
+      }
+    }
+
+    function handleSend() {
+      const input = document.getElementById("chat-input");
+      const text = input.value.trim();
+      if (!text || isProcessing) return;
+
+      // Rate limit: 3 second cooldown
+      const now = Date.now();
+      if (now - lastMessageTime < 3000) return;
+      lastMessageTime = now;
+
+      input.value = "";
+      removeQuickReplies();
+      addUserMessage(text, false);
+      sendToN8N(text);
+    }
+
+    // ── N8N CALL ─────────────────────────────────────────────
+    async function sendToN8N(userText) {
+      lockInput();
+      showTyping();
+      try {
+        const res = await fetch(N8N_WEBHOOK, {
+          method: "POST",
+          headers: { 
+            "Content-Type": "application/json",
+            "X-Auth-Token": "sf_live_7x9Kp2mWqR4vNcBd"
+          },
+          body: JSON.stringify({ history: chatHistory })
+        });
+        const data = await res.json();
+        const reply = data.reply || data.message || "Sorry, I didn't get that. Could you try again?";
+
+        // Check for trigger codes
+        const code = extractCode(reply);
+        const cleanMsg = reply.replace(/\[([A-Z_]+)\]/g, "").trim();
+
+        removeTypingIndicator();
+        await addBotMessage(cleanMsg, true);
+        unlockInput();
+
+        if (code === "SHOW_QUOTE_FORM") {
+          logSystemEvent("BOT_TRIGGERED_FORM", { reason: "ai_decision" });
+          setTimeout(() => showQuoteForm(), 300);
+        } else if (code === "SHOW_BOOKING") {
+          logSystemEvent("BOT_TRIGGERED_BOOKING", {});
+          setTimeout(() => showBookingForm(), 300);
+        } else if (code === "SHOW_WAITLIST") {
+          logSystemEvent("BOT_TRIGGERED_WAITLIST", {});
+          setTimeout(() => showWaitlistForm(), 300);
+        } else if (code === "SHOW_CALLBACK") {
+          logSystemEvent("BOT_TRIGGERED_CALLBACK", {});
+          setTimeout(() => showCallbackForm(), 300);
+        }
+
+      } catch (err) {
+        removeTypingIndicator();
+        const demo = getDemoReply(userText);
+        await addBotMessage(demo, true);
+        unlockInput();
+      }
+    }
+
+    // ── BOOKING CONTACT FORM ──────────────────────────────
+    function showBookingForm() {
+      injectBookingForm();
+    }
+
+    // ── WAITLIST FORM ───────────────────────────────────
+    function showWaitlistForm() {
+      injectContactForm('waitlist', '\ud83d\udccb Join the Waitlist', 'Notes (optional)', 'e.g. Urgent, flexible on dates', 'WAITLIST_SUBMITTED');
+    }
+
+    // ── CALLBACK FORM ──────────────────────────────────
+    function showCallbackForm() {
+      injectContactForm('callback', '\ud83d\udcde Request a Callback', 'Best time to call', 'e.g. After 5pm, anytime', 'CALLBACK_SUBMITTED');
+    }
+
+    // ── BOOKING FORM (with address + date picker) ────────
+    function injectBookingForm() {
+      const container = document.getElementById("messages");
+      const card = document.createElement("div");
+      card.className = "form-card";
+      card.id = "booking-form-card";
+      card.innerHTML = `
+        <div class="form-card-title">\ud83d\udcc5 Book a Visit</div>
+
+        <div class="form-group">
+          <label class="form-label">Your Name</label>
+          <input class="form-input" id="bf-name" type="text" placeholder="First name is fine" oninput="this.classList.remove('error')" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Phone Number</label>
+          <input class="form-input" id="bf-phone" type="tel" placeholder="e.g. 021 123 4567" oninput="this.classList.remove('error')" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Email (optional)</label>
+          <input class="form-input" id="bf-email" type="email" placeholder="your@email.co.nz" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Property Address</label>
+          <input class="form-input" id="bf-address" type="text" placeholder="e.g. 12 Queen St, Epsom" oninput="this.classList.remove('error')" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Preferred Date</label>
+          <input class="form-input" id="bf-date" type="date" oninput="this.classList.remove('error')" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Preferred Time</label>
+          <select class="form-select" id="bf-time" oninput="this.classList.remove('error')">
+            <option value="">Select\u2026</option>
+            <option value="morning">Morning (8am \u2013 12pm)</option>
+            <option value="afternoon">Afternoon (12pm \u2013 4pm)</option>
+            <option value="late_afternoon">Late Arvo (4pm \u2013 6pm)</option>
+            <option value="flexible">I'm Flexible</option>
+          </select>
+        </div>
+
+        <button class="submit-btn" id="bf-submit-btn" onclick="submitBookingForm()">Submit Booking \u2192</button>
+      `;
+      container.appendChild(card);
+      // Set min date to today
+      const dateInput = card.querySelector('#bf-date');
+      if (dateInput) dateInput.min = new Date().toISOString().split('T')[0];
+      setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'end' }), 50);
+    }
+
+    function submitBookingForm() {
+      const btn = document.getElementById("bf-submit-btn");
+      if (btn) { btn.disabled = true; btn.textContent = "Sending..."; }
+
+      const name    = document.getElementById("bf-name").value.trim();
+      const phone   = document.getElementById("bf-phone").value.trim();
+      const email   = document.getElementById("bf-email").value.trim();
+      const address = document.getElementById("bf-address").value.trim();
+      const date    = document.getElementById("bf-date").value;
+      const time    = document.getElementById("bf-time").value;
+
+      let hasError = false;
+      if (!name) { document.getElementById("bf-name").classList.add("error"); hasError = true; }
+      if (!phone) { document.getElementById("bf-phone").classList.add("error"); hasError = true; }
+      if (!address) { document.getElementById("bf-address").classList.add("error"); hasError = true; }
+      if (!date) { document.getElementById("bf-date").classList.add("error"); hasError = true; }
+      if (!time) { document.getElementById("bf-time").classList.add("error"); hasError = true; }
+
+      if (hasError) {
+        if (btn) { btn.disabled = false; btn.textContent = "Submit Booking \u2192"; }
+        return;
+      }
+
+      const formCard = document.getElementById("booking-form-card");
+      if (formCard) formCard.remove();
+
+      const timeLabels = { morning: 'Morning', afternoon: 'Afternoon', late_afternoon: 'Late Arvo', flexible: 'Flexible' };
+      const summary = `\ud83d\udcdd Booking request:\n\u2022 Name: ${name}\n\u2022 Phone: ${phone}${email ? '\n\u2022 Email: ' + email : ''}\n\u2022 Address: ${address}\n\u2022 Date: ${date}\n\u2022 Time: ${timeLabels[time]}`;
+      addUserMessage(summary, false);
+
+      const formData = { name, phone, email, address, date, time, type: 'booking' };
+      logSystemEvent('BOOKING_SUBMITTED', formData);
+
+      // Confirmation card
+      const container = document.getElementById("messages");
+      const confirm = document.createElement("div");
+      confirm.className = "confirm-card";
+      confirm.innerHTML = `
+        <div class="confirm-icon">\u2705</div>
+        <div class="confirm-title">Booking Request Sent!</div>
+        <div class="confirm-text">Luke will be in touch within 24 hours to confirm your appointment.</div>
+      `;
+      container.appendChild(confirm);
+      scrollToBottom();
+      sendToN8N(summary);
+    }
+
+    // ── GENERIC CONTACT FORM BUILDER ──────────────────
+    function injectContactForm(type, title, extraLabel, extraPlaceholder, eventName) {
+      const container = document.getElementById("messages");
+      const card = document.createElement("div");
+      card.className = "form-card";
+      card.id = `${type}-form-card`;
+      card.innerHTML = `
+        <div class="form-card-title">${title}</div>
+
+        <div class="form-group">
+          <label class="form-label">Your Name</label>
+          <input class="form-input" id="cf-name" type="text" placeholder="First name is fine" oninput="this.classList.remove('error')" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Phone Number</label>
+          <input class="form-input" id="cf-phone" type="tel" placeholder="e.g. 021 123 4567" oninput="this.classList.remove('error')" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Email (optional)</label>
+          <input class="form-input" id="cf-email" type="email" placeholder="your@email.co.nz" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">${extraLabel}</label>
+          <input class="form-input" id="cf-extra" type="text" placeholder="${extraPlaceholder}" />
+        </div>
+
+        <button class="submit-btn" id="cf-submit-btn" onclick="submitContactForm('${type}', '${eventName}')">Submit \u2192</button>
+      `;
+      container.appendChild(card);
+      setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'end' }), 50);
+    }
+
+    function submitContactForm(type, eventName) {
+      const btn = document.getElementById("cf-submit-btn");
+      if (btn) { btn.disabled = true; btn.textContent = "Sending..."; }
+
+      const name  = document.getElementById("cf-name").value.trim();
+      const phone = document.getElementById("cf-phone").value.trim();
+      const email = document.getElementById("cf-email").value.trim();
+      const extra = document.getElementById("cf-extra").value.trim();
+
+      // Validate required fields
+      let hasError = false;
+      if (!name) { document.getElementById("cf-name").classList.add("error"); hasError = true; }
+      if (!phone) { document.getElementById("cf-phone").classList.add("error"); hasError = true; }
+
+      if (hasError) {
+        if (btn) { btn.disabled = false; btn.textContent = "Submit \u2192"; }
+        return;
+      }
+
+      // Remove form
+      const formCard = document.getElementById(`${type}-form-card`);
+      if (formCard) formCard.remove();
+
+      // User message summary
+      const summary = `\ud83d\udcdd Contact details:\n\u2022 Name: ${name}\n\u2022 Phone: ${phone}${email ? '\n\u2022 Email: ' + email : ''}${extra ? '\n\u2022 ' + extra : ''}`;
+      addUserMessage(summary, false);
+
+      // Log the event
+      const formData = { name, phone, email, extra, type };
+      logSystemEvent(eventName, formData);
+
+      // Show confirmation card
+      const container = document.getElementById("messages");
+      const confirm = document.createElement("div");
+      confirm.className = "confirm-card";
+      const confirmMessages = {
+        booking: { icon: '\u2705', title: 'Booking Request Sent!', text: 'Luke will be in touch within 24 hours to confirm your appointment.' },
+        waitlist: { icon: '\ud83d\udccb', title: 'Added to Waitlist!', text: "You're on the list! Luke will reach out as soon as a slot opens up." },
+        callback: { icon: '\ud83d\udcde', title: 'Callback Requested!', text: 'Luke will give you a ring when he\'s free \u2014 usually within a few hours.' }
+      };
+      const cm = confirmMessages[type];
+      confirm.innerHTML = `
+        <div class="confirm-icon">${cm.icon}</div>
+        <div class="confirm-title">${cm.title}</div>
+        <div class="confirm-text">${cm.text}</div>
+      `;
+      container.appendChild(confirm);
+      scrollToBottom();
+
+      // Send to n8n so Luke gets notified
+      sendToN8N(summary);
+    }
+
+    // ── DEMO REPLIES (when n8n isn't connected) ───────────────
+    function getDemoReply(text) {
+      const t = text.toLowerCase();
+      if (t.includes("service")) return "Luke offers standard cleans, deep cleans, and move in/out cleans. He brings all his own supplies and equipment — no need to worry about a thing! 🧹";
+      if (t.includes("long") || t.includes("time")) return "For a standard 3-bedroom home, a clean typically takes 2.5–3.5 hours. A deep clean can take 4–6 hours depending on the condition. Luke will give you a more accurate time after your quote! ⏱";
+      if (t.includes("area") || t.includes("suburb") || t.includes("service")) return "Luke services most of the Auckland region. Drop your suburb and I can confirm whether he covers your area! 📍";
+      if (t.includes("price") || t.includes("cost") || t.includes("charge") || t.includes("quote")) return "Happy to help with that! Hit the 'Get a Quote' button and fill in a few quick details — I'll give you an estimate straight away. 💰";
+      if (t.includes("book") || t.includes("available")) return "Luke is currently fully booked, but you can join his waitlist and we'll reach out as soon as a slot opens up. Would you like me to add you? 📋";
+      return "Thanks for your message! To make sure Luke gets all the right details, would you like to get a quote or is there something specific I can help with? 😊";
+    }
+
+    function extractCode(text) {
+      const match = text.match(/\[([A-Z_]+)\]/);
+      return match ? match[1] : null;
+    }
+
+    // ── CHAT HISTORY HELPERS ──────────────────────────────────
+    function addUserMessage(text, skipHistory) {
+      if (!skipHistory) {
+        chatHistory.push({ role: "user", content: text, timestamp: isoNow() });
+      }
+      const container = document.getElementById("messages");
+      const row = document.createElement("div");
+      row.className = "msg-row user";
+      row.innerHTML = `<div class="bubble">${escHtml(text).replace(/\n/g, "<br>")}</div>`;
+      container.appendChild(row);
+      scrollToBottom();
+    }
+
+    function addBotMessage(text, animate) {
+      return new Promise(resolve => {
+        chatHistory.push({ role: "assistant", content: text, timestamp: isoNow() });
+        const container = document.getElementById("messages");
+        const row = document.createElement("div");
+        row.className = "msg-row bot";
+
+        const avatar = document.createElement("div");
+        avatar.className = "msg-avatar";
+        avatar.textContent = "🧹";
+
+        const bubble = document.createElement("div");
+        bubble.className = "bubble";
+
+        row.appendChild(avatar);
+        row.appendChild(bubble);
+        container.appendChild(row);
+        scrollToBottom();
+
+        if (animate) {
+          let i = 0;
+          const chars = text.split("");
+          const interval = setInterval(() => {
+            bubble.innerHTML = escHtml(chars.slice(0, ++i).join("")).replace(/\n/g, "<br>");
+            scrollToBottom();
+            if (i >= chars.length) {
+              clearInterval(interval);
+              resolve();
+            }
+          }, TYPING_MS);
+        } else {
+          bubble.innerHTML = escHtml(text).replace(/\n/g, "<br>");
+          resolve();
+        }
+      });
+    }
+
+    function logSystemEvent(event, data) {
+      chatHistory.push({
+        role: "system",
+        event,
+        data,
+        timestamp: isoNow()
+      });
+      // Events are logged to chatHistory for n8n but not shown in UI
+    }
+
+    // ── TYPING INDICATOR ──────────────────────────────────────
+    function showTyping(ms) {
+      return new Promise(resolve => {
+        // Remove any existing typing indicator first
+        removeTypingIndicator();
+
+        const container = document.getElementById("messages");
+        const row = document.createElement("div");
+        row.className = "msg-row bot";
+        row.id = "typing-row";
+
+        const avatar = document.createElement("div");
+        avatar.className = "msg-avatar";
+        avatar.textContent = "\ud83e\uddf9";
+
+        const bubble = document.createElement("div");
+        bubble.className = "bubble";
+        bubble.innerHTML = `<div class="typing-indicator"><span></span><span></span><span></span></div>`;
+
+        row.appendChild(avatar);
+        row.appendChild(bubble);
+        container.appendChild(row);
+        scrollToBottom();
+
+        if (ms) {
+          // Timed mode: auto-remove after delay
+          setTimeout(() => {
+            removeTypingIndicator();
+            resolve();
+          }, ms);
+        } else {
+          // Persistent mode: dots stay until manually removed
+          resolve();
+        }
+      });
+    }
+
+    function removeTypingIndicator() {
+      const el = document.getElementById("typing-row");
+      if (el) el.remove();
+    }
+
+    // ── UTILS ─────────────────────────────────────────────────
+    function scrollToBottom() {
+      const el = document.getElementById("messages");
+      el.scrollTop = el.scrollHeight;
+    }
+
+    function escHtml(s) {
+      return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+
+    function isoNow() { return new Date().toISOString(); }
+
+    function formatTime(d) {
+      return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    }
+  </script>
+</body>
+
+</html>

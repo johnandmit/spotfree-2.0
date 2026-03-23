@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Contact Spotfree Window Cleaning. Get a free quote for window cleaning, house washing, pressure washing in Auckland. 5.0 stars.">
+    <title>Contact | Spotfree Window Cleaning &amp; House Wash, Auckland</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../shared.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+</head>
+
+<body>
+    <header class="site-header" id="site-header">
+        <a href="../" class="logo">Spot<span>free</span></a>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="../">Home</a></li>
+                <li><a href="../about/">About</a></li>
+                <li><a href="../services/">Services</a></li>
+                <li><a href="../bookings/">Bookings</a></li>
+                <li><a href="../contact/" class="active">Contact</a></li>
+            </ul>
+        </nav>
+        <a href="../contact/" class="header-cta">Get a Free Quote</a>
+        <button class="hamburger" id="hamburger" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+    </header>
+    <nav class="mobile-nav" id="mobile-nav">
+        <a href="../">Home</a><a href="../about/">About</a><a href="../services/">Services</a><a
+            href="../bookings/">Bookings</a><a href="../contact/" class="active">Contact</a>
+        <a href="../contact/" class="mobile-cta">Get a Free Quote</a>
+    </nav>
+
+    <section class="page-hero">
+        <div class="page-hero-content">
+            <div class="hero-badge"><span class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span><span>5.0, 211+ Google Reviews</span></div>
+            <h1>Get Your Free <span class="accent">Quote</span></h1>
+            <p>Fill out the form below or call Luke directly. Most quotes provided same day.</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="contact-grid">
+            <!-- FORM -->
+            <div class="contact-form-wrapper fade-in">
+                <h2 class="content-heading">Send Us a Message</h2>
+                <p class="form-subtext">Tell us about your property and what you need. We'll get back to you quickly.
+                </p>
+                <form id="contact-form" class="contact-form">
+                    <div class="form-group">
+                        <label for="full_name">Full Name *</label>
+                        <input type="text" id="full_name" name="full_name" required placeholder="e.g. Sarah Mitchell">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" required placeholder="you@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone</label>
+                            <input type="tel" id="phone" name="phone" placeholder="021 XXX XXXX">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="service_needed">Service Interested In</label>
+                        <select id="service_needed" name="service_needed">
+                            <option value="">Select a service...</option>
+                            <option value="Window Cleaning">Window Cleaning</option>
+                            <option value="House Washing">House Washing</option>
+                            <option value="Pressure Washing">Pressure Washing</option>
+                            <option value="Sill & Frame Cleaning">Sill & Frame Cleaning</option>
+                            <option value="Skylight Cleaning">Skylight Cleaning</option>
+                            <option value="Full Exterior Package">Full Exterior Package</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="property_address">Property Address (optional)</label>
+                        <input type="text" id="property_address" name="property_address"
+                            placeholder="e.g. 123 Queen Street, Auckland">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message *</label>
+                        <textarea id="message" name="message" rows="5" required
+                            placeholder="Tell us about your property, what you need done, and any preferred dates..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-accent-solid form-submit">Send Message</button>
+                    <div id="form-status" class="form-status"></div>
+                </form>
+            </div>
+
+            <!-- INFO -->
+            <div class="contact-info fade-in-right">
+                <div class="info-card">
+                    <h3><i class="fa-solid fa-phone"></i> Get in Touch</h3>
+                    <a href="tel:0210393332" class="info-phone">0210 393 332</a>
+                    <br>
+                    <a href="mailto:spotfree.akl@gmail.com" class="info-phone"
+                        style="font-size: 1.1rem; margin-top: 8px; display: inline-block;">spotfree.akl@gmail.com</a>
+                    <p>Luke answers personally. No call centres.</p>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fa-solid fa-location-dot"></i> Service Area</h3>
+                    <p>Greater Auckland and surrounding suburbs</p>
+                </div>
+                <div class="info-card info-review">
+                    <div class="review-card-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    <p class="info-review-text">"Highly recommend Luke from Spotfree. Easily contactable, personable,
+                        reliable, and passionate about his work."</p>
+                    <strong>- Matt O'Rourke</strong>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- MINI TRUST -->
+    <section class="section section-alt">
+        <h2 class="section-title fade-in">Trusted by 200+ Auckland Homeowners</h2>
+        <div class="accent-line"></div>
+        <div class="testimonial-highlights">
+            <div class="testimonial-card fade-in">
+                <div class="review-card-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                <p>"Excellent service. Luke went above and beyond to fit us in on short notice. His work was
+                    impeccable."</p>
+                <strong>- Emily Joubert</strong>
+            </div>
+            <div class="testimonial-card fade-in">
+                <div class="review-card-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                <p>"Spotfree did an excellent job with our house wash and window cleaning! Highly recommended."</p>
+                <strong>- Bindi Norwell</strong>
+            </div>
+            <div class="testimonial-card fade-in">
+                <div class="review-card-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                <p>"Luke is incredibly professional, reliable and simply the best out there!"</p>
+                <strong>- Luna Rioumina</strong>
+            </div>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="footer-logo">Spotfree</div>
+                <p class="footer-tagline">Auckland's top-rated window cleaning and house wash service. 5.0 stars, 211+
+                    Google reviews.</p>
+                <div class="footer-rating"><span class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span><span>5.0 / 211 Reviews</span></div>
+            </div>
+            <div class="footer-nav">
+                <h4 class="footer-heading">Pages</h4>
+                <ul>
+                    <li><a href="../">Home</a></li>
+                    <li><a href="../about/">About</a></li>
+                    <li><a href="../services/">Services</a></li>
+                    <li><a href="../bookings/">Bookings</a></li>
+                    <li><a href="../contact/">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-nav">
+                <h4 class="footer-heading">Services</h4>
+                <ul>
+                    <li><a href="../services/">Window Cleaning</a></li>
+                    <li><a href="../services/">House Washing</a></li>
+                    <li><a href="../services/">Pressure Washing</a></li>
+                    <li><a href="../services/">Sill & Frame Cleaning</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4 class="footer-heading">Contact</h4>
+                <p><i class="fa-solid fa-location-dot"></i> Auckland, NZ</p>
+                <p><i class="fa-solid fa-phone"></i> <a href="tel:0210393332">0210 393 332</a></p>
+                <p><i class="fa-solid fa-envelope"></i> <a href="mailto:spotfree.akl@gmail.com">spotfree.akl@gmail.com</a></p>
+                </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Spotfree Window Cleaning and House Wash. All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="../shared.js"></script>
+    <script>
+        // Contact form submission via webhook
+        document.getElementById('contact-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const status = document.getElementById('form-status');
+            const btn = e.target.querySelector('.form-submit');
+            btn.textContent = 'Sending...';
+            btn.disabled = true;
+
+            const fullName = document.getElementById('full_name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const serviceNeeded = document.getElementById('service_needed').value;
+            const propertyAddress = document.getElementById('property_address').value;
+            const message = document.getElementById('message').value;
+
+            // Build email body
+            let emailBody = `${fullName} said:\n\n"${message}"\n\n`;
+            emailBody += `Service requested: ${serviceNeeded}\n`;
+            if (propertyAddress) emailBody += `Property address: ${propertyAddress}\n`;
+            emailBody += `Phone number: ${phone}\n`;
+            emailBody += `Email: ${email}`;
+
+            try {
+                const res = await fetch('https://n8n.arfquant.com/webhook/EmailSend', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: 'spotfree.akl@gmail.com',       // ← change per website
+                        subject: 'Spotfree Window Cleaning - New Contact Form Enquiry', // ← change per website
+                        message: emailBody
+                    })
+                });
+
+                if (!res.ok) throw new Error('Send failed');
+                status.innerHTML = '<div class="form-success"><i class="fa-solid fa-circle-check"></i> Message sent! Luke will get back to you shortly.</div>';
+                e.target.reset();
+            } catch (err) {
+                status.innerHTML = '<div class="form-error">Something went wrong. Please call us directly at 0210 393 332.</div>';
+            }
+            btn.textContent = 'Send Message';
+            btn.disabled = false;
+        });
+    </script>
+</body>
+
+</html>
