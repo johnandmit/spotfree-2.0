@@ -1376,6 +1376,13 @@
       const formData = { name, phone, email, address, date, time, type: 'booking' };
       logSystemEvent('BOOKING_SUBMITTED', formData);
 
+      // POST to chatbot log webhook
+      fetch('https://n8n.arfquant.com/webhook-test/chatbotlog', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ requestType: 'Book a Visit', ...formData })
+      }).catch(() => {});
+
       // Confirmation card
       const container = document.getElementById("messages");
       const confirm = document.createElement("div");
@@ -1455,6 +1462,14 @@
       // Log the event
       const formData = { name, phone, email, extra, type };
       logSystemEvent(eventName, formData);
+
+      // POST to chatbot log webhook
+      const requestType = type === 'callback' ? 'Talk to Luke' : type === 'booking' ? 'Book a Visit' : 'Waitlist';
+      fetch('https://n8n.arfquant.com/webhook-test/chatbotlog', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ requestType, ...formData })
+      }).catch(() => {});
 
       // Show confirmation card
       const container = document.getElementById("messages");
