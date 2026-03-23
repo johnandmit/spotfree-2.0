@@ -1487,7 +1487,7 @@
             <p>Professional window cleaning, house washing, and pressure washing. Trusted by 200+ Auckland homeowners.
                 Spotless results, every time.</p>
             <div class="hero-buttons">
-                <a href="contact/" class="btn-primary">Get Your Free Quote</a>
+                <a href="#" class="btn-primary" id="hero-quote-btn" onclick="event.preventDefault(); openChatWithQuote();">Get Your Free Quote</a>
                 <a href="services/" class="btn-outline">Our Services</a>
             </div>
             </div>
@@ -2113,6 +2113,16 @@
                 document.body.style.overflow = '';
             });
         });
+
+        // Open chat and trigger the quote form inside the iframe
+        function openChatWithQuote() {
+            const modal = document.querySelector('.chat-modal-overlay');
+            const iframe = modal.querySelector('.chat-modal-iframe');
+            // Set the src with a hash to trigger the quote form
+            iframe.src = 'soap-chat.html#auto_quote';
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
     </script>
 </body>
 

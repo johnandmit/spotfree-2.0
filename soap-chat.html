@@ -809,6 +809,11 @@
           const greeting = "Hi there! 👋 Welcome to Spotfree. How can I help you today?";
           addBotMessage(greeting, true).then(() => {
             if (!quickRepliesShown) showQuickReplies();
+            // Auto-open quote form if triggered via URL hash
+            if (window.location.hash === '#auto_quote') {
+              setTimeout(() => handleQuickReply('get_quote'), 400);
+              history.replaceState(null, '', window.location.pathname);
+            }
           });
         });
       }, 600);
@@ -1320,7 +1325,7 @@
 
         <div class="form-group">
           <label class="form-label">Preferred Date</label>
-          <input class="form-input" id="bf-date" type="date" oninput="this.classList.remove('error')" />
+          <input class="form-input" id="bf-date" type="date" oninput="this.classList.remove('error')" onfocus="this.showPicker && this.showPicker()" onclick="this.showPicker && this.showPicker()" />
         </div>
 
         <div class="form-group">
@@ -1377,7 +1382,7 @@
       logSystemEvent('BOOKING_SUBMITTED', formData);
 
       // POST to chatbot log webhook
-      fetch('https://n8n.arfquant.com/webhook-test/chatbotlog', {
+      fetch('https://n8n.arfquant.com/webhook/chatbotlog', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ requestType: 'Book a Visit', ...formData })
@@ -1465,7 +1470,7 @@
 
       // POST to chatbot log webhook
       const requestType = type === 'callback' ? 'Talk to Luke' : type === 'booking' ? 'Book a Visit' : 'Waitlist';
-      fetch('https://n8n.arfquant.com/webhook-test/chatbotlog', {
+      fetch('https://n8n.arfquant.com/webhook/chatbotlog', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ requestType, ...formData })
