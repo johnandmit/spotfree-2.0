@@ -1385,7 +1385,7 @@
       fetch('https://n8n.arfquant.com/webhook/chatbotlog', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ requestType: 'Book a Visit', ...formData })
+        body: JSON.stringify({ requestType: 'Book a Visit', business: 'Spotfree', ...formData })
       }).catch(() => {});
 
       // Confirmation card
@@ -1473,7 +1473,7 @@
       fetch('https://n8n.arfquant.com/webhook/chatbotlog', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ requestType, ...formData })
+        body: JSON.stringify({ requestType, business: 'Spotfree', ...formData })
       }).catch(() => {});
 
       // Show confirmation card

@@ -69,4 +69,17 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.classList.remove('active');
         document.body.style.overflow = '';
     });
+
+    // 5. Intercept header & mobile "Get a Free Quote" CTA buttons
+    document.querySelectorAll('.header-cta, .mobile-cta').forEach(btn => {
+        if (btn.textContent.trim().toLowerCase().includes('free quote')) {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const iframe = modal.querySelector('.chat-modal-iframe');
+                iframe.src = pathToChat + '#auto_quote';
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        }
+    });
 });
