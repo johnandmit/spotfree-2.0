@@ -70,8 +70,8 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.overflow = '';
     });
 
-    // 5. Intercept header & mobile "Get a Free Quote" CTA buttons
-    document.querySelectorAll('.header-cta, .mobile-cta').forEach(btn => {
+    // 5. Intercept all "Get a Free Quote" CTA buttons (header, mobile, banner)
+    document.querySelectorAll('.header-cta, .mobile-cta, .btn-white, .btn-primary').forEach(btn => {
         if (btn.textContent.trim().toLowerCase().includes('free quote')) {
             btn.addEventListener('click', (e) => {
                 e.preventDefault();
