@@ -880,7 +880,20 @@
         logSystemEvent("BOT_TRIGGERED_CALLBACK", {});
         lockInput();
         showTyping(600).then(() => {
-          addBotMessage("No worries! You can reach Luke directly at <a href='tel:098864503' style='color:var(--accent);font-weight:600'>09 886 4503</a> 📞 Or leave your number below and he'll give you a ring when he's free!", true).then(() => {
+          addBotMessage("No worries! You can reach Luke directly or leave your number below and he'll give you a ring when he's free! 📞", true).then(() => {
+            // Inject clickable phone card
+            const container = document.getElementById("messages");
+            const phoneCard = document.createElement("div");
+            phoneCard.className = "confirm-card";
+            phoneCard.style.cursor = "pointer";
+            phoneCard.innerHTML = `
+              <div class="confirm-icon">📞</div>
+              <div class="confirm-title"><a href="tel:098864503" style="color:inherit;text-decoration:none;">09 886 4503</a></div>
+              <div class="confirm-text">Tap to call Luke directly</div>
+            `;
+            phoneCard.onclick = () => { window.open('tel:098864503'); };
+            container.appendChild(phoneCard);
+            scrollToBottom();
             unlockInput();
             showCallbackForm();
           });
