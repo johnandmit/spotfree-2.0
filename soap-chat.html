@@ -880,7 +880,7 @@
         logSystemEvent("BOT_TRIGGERED_CALLBACK", {});
         lockInput();
         showTyping(600).then(() => {
-          addBotMessage("No worries! Leave your number below and Luke will give you a ring when he's free 📞", true).then(() => {
+          addBotMessage("No worries! You can reach Luke directly at <a href='tel:098864503' style='color:var(--accent);font-weight:600'>09 886 4503</a> 📞 Or leave your number below and he'll give you a ring when he's free!", true).then(() => {
             unlockInput();
             showCallbackForm();
           });
