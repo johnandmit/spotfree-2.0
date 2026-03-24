@@ -4,7 +4,7 @@ const mobileNav = document.getElementById('mobile-nav');
 if (hamburger && mobileNav) {
     hamburger.addEventListener('click', () => {
         mobileNav.classList.toggle('open');
-        hamburger.textContent = mobileNav.classList.contains('open') ? '✕' : '☰';
+        hamburger.innerHTML = mobileNav.classList.contains('open') ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-bars"></i>';
     });
 }
 
